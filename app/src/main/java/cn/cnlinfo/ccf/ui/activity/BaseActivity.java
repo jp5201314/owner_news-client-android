@@ -19,15 +19,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.Toast;
-
-import org.greenrobot.eventbus.EventBus;
 
 import cc.cloudist.acplibrary.ACProgressFlower;
 import cn.cnlinfo.ccf.R;
 import cn.cnlinfo.ccf.UserSharedPreference;
 import cn.cnlinfo.ccf.dialog.DialogCreater;
-import cn.cnlinfo.ccf.event.ErrorMessageEvent;
 import cn.cnlinfo.ccf.inter.IActivityFinish;
 import cn.cnlinfo.ccf.inter.IComponentContainer;
 import cn.cnlinfo.ccf.inter.ILifeCycleComponent;
@@ -35,8 +31,6 @@ import cn.cnlinfo.ccf.manager.AppManage;
 import cn.cnlinfo.ccf.manager.LifeCycleComponentManager;
 import cn.cnlinfo.ccf.manager.PhoneManager;
 import cn.cnlinfo.ccf.manager.SystemBarTintManager;
-import cn.cnlinfo.ccf.net_okhttp.OKHttpManager;
-import cn.cnlinfo.ccf.receiver.GlobalErrorMessageReceiver;
 import cn.cnlinfo.ccf.receiver.NetworkConnectChangedReceiver;
 import cn.cnlinfo.ccf.ui.login.LoginRegisterActivity;
 import cn.cnlinfo.ccf.view.RefreshHeaderView;
@@ -49,21 +43,19 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 
 public class BaseActivity extends AppCompatActivity implements IComponentContainer, IActivityFinish {
 
-    public static final String BROADCAST_FLAG = "cn.cnlinfo.ccf.response.message";
     public static final String BROADCAST_NETWORK_FLAG = "cn.cnlinfo.ccf.net";
     private LifeCycleComponentManager mComponentContainer = new LifeCycleComponentManager();
     protected ACProgressFlower waitingDialog;
-    private GlobalErrorMessageReceiver messageReceiver;
     private NetworkConnectChangedReceiver receiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppManage.getInstance().addActivity(this);
-        messageReceiver = new GlobalErrorMessageReceiver();
         receiver = new NetworkConnectChangedReceiver();
         registerNetworkConnectChangedReceiver();
-        registerGlobalErrorMessageReceiver();
+
     }
 
     private void registerNetworkConnectChangedReceiver() {
@@ -73,12 +65,6 @@ public class BaseActivity extends AppCompatActivity implements IComponentContain
         intentFilter.addAction("android.net.wifi.STATE_CHANGE");
         intentFilter.addAction(BROADCAST_NETWORK_FLAG);
         registerReceiver(receiver, intentFilter);
-    }
-
-    private void registerGlobalErrorMessageReceiver() {
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BROADCAST_FLAG);
-        registerReceiver(messageReceiver, intentFilter);
     }
 
     @Override
@@ -105,14 +91,6 @@ public class BaseActivity extends AppCompatActivity implements IComponentContain
 
     protected void toLogin(){
         startActivity(new Intent(this,LoginRegisterActivity.class));
-    }
-
-    protected void showMessage(int status, String message) {
-        EventBus.getDefault().post(new ErrorMessageEvent(status,message));
-    }
-
-    protected void showMessage(String message) {
-        EventBus.getDefault().post(new ErrorMessageEvent(message));
     }
 
     protected void showWaitingDialog(boolean show, String waitingNotice) {
@@ -165,7 +143,6 @@ public class BaseActivity extends AppCompatActivity implements IComponentContain
     @Override
     protected void onPause() {
         super.onPause();
-
         mComponentContainer.onBecomesPartiallyInvisible();
     }
 
@@ -180,9 +157,7 @@ public class BaseActivity extends AppCompatActivity implements IComponentContain
     protected void onDestroy() {
         super.onDestroy();
         mComponentContainer.onDestroy();
-        unregisterReceiver(messageReceiver);
         unregisterReceiver(receiver);
-        OKHttpManager.cancelAndRemoveAllCalls();
     }
 
     @Override
@@ -203,24 +178,6 @@ public class BaseActivity extends AppCompatActivity implements IComponentContain
         set.setDuration(400).start();
         set.setInterpolator(new AccelerateDecelerateInterpolator());
         set.addListener(onAnimationEnd);
-    }
-
-    /**
-     * toast message
-     *
-     * @param text
-     */
-    protected void toast(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * toast message
-     *
-     * @param resource
-     */
-    protected void toast(int resource) {
-        Toast.makeText(this, resource, Toast.LENGTH_SHORT).show();
     }
 
     @Override

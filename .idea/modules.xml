@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ccf-client-android.iml" filepath="$PROJECT_DIR$/ccf-client-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/owner_news-client-android.iml" filepath="$PROJECT_DIR$/owner_news-client-android.iml" />
     </modules>
   </component>
 </project>

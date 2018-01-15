@@ -37,7 +37,7 @@ public class UserSharedPreference {
 
     public static synchronized UserSharedPreference getInstance() {
         if (instance == null) {
-            instance = new UserSharedPreference(CCFApplication.getContext());
+            instance = new UserSharedPreference(OwnerNewsApplication.getContext());
         }
         return instance;
     }

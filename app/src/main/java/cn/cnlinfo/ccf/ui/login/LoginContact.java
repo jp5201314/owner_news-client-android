@@ -15,6 +15,6 @@ public interface LoginContact {
     }
 
     interface Presenter extends IBasePresenter {
-        void toLogin( String baseUrl, String userName, String passWord);
+        void toLogin( int type, String userName, String passWord);
     }
 }

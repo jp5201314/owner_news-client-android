@@ -1,17 +1,10 @@
 package cn.cnlinfo.ccf.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.widget.Toast;
-
-import com.alibaba.fastjson.JSON;
-
-import org.greenrobot.eventbus.EventBus;
 
 import cc.cloudist.acplibrary.ACProgressFlower;
 import cn.cnlinfo.ccf.R;
 import cn.cnlinfo.ccf.dialog.DialogCreater;
-import cn.cnlinfo.ccf.event.ErrorMessageEvent;
 import cn.cnlinfo.ccf.inter.IComponentContainer;
 import cn.cnlinfo.ccf.inter.IFragment;
 import cn.cnlinfo.ccf.inter.ILifeCycleComponent;
@@ -77,13 +70,6 @@ public class BaseFragment extends LazyFragment implements IFragment, IComponentC
         super.onDestroy();
         this.mComponentContainer.onDestroy();
     }
-    protected void showMessage(int status, String message) {
-        EventBus.getDefault().post(new ErrorMessageEvent(status,message));
-    }
-
-    protected void showMessage(String message) {
-        EventBus.getDefault().post(new ErrorMessageEvent(message));
-    }
 
     protected void toast(int rsId) {
         toast(getString(rsId));
@@ -92,61 +78,6 @@ public class BaseFragment extends LazyFragment implements IFragment, IComponentC
 
     protected void toast(String str) {
         Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * 从本地获取持久化的entity
-     *
-     * @param key
-     * @param clazz
-     * @param <T>
-     * @return
-     */
-    protected <T> T getEntityFromLocalStorage(String storageKey, String key, Class<T> clazz) {
-        SharedPreferences share = getContext().getSharedPreferences(storageKey, Context.MODE_PRIVATE);
-        if (share.contains(key)) {
-            String dealerJson = share.getString(key, null);
-            return null == dealerJson ? null : JSON.parseObject(dealerJson, clazz);
-        }
-        return null;
-    }
-
-    /**
-     * 将entity持久化存储到本地(异步,非及时)
-     *
-     * @param key
-     * @param entity
-     */
-    protected void putEntityToLocalStorage(String storageKey, String key, Object entity) {
-        putEntityToLocalStorage(storageKey, key, entity, false);
-    }
-
-    /**
-     * 将entity持久化存储到本地(及时)
-     *
-     * @param key
-     * @param entity
-     */
-    protected void putEntityToLocalStorageNow(String storageKey, String key, Object entity) {
-        putEntityToLocalStorage(storageKey, key, entity, true);
-    }
-
-    private void putEntityToLocalStorage(String storageKey, String key, Object entity, boolean isNow) {
-        SharedPreferences share = getContext().getSharedPreferences(storageKey, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = share.edit();
-        if (null == entity) {
-            if (!share.contains(key)) {
-                return;
-            }
-            editor.remove(key);
-        } else {
-            editor.putString(key, JSON.toJSONString(entity));
-        }
-        if (isNow) {
-            editor.commit();
-        } else {
-            editor.apply();
-        }
     }
 
 

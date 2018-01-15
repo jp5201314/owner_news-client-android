@@ -13,11 +13,12 @@ import com.orhanobut.logger.Logger;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.cnlinfo.ccf.Constant;
 import cn.cnlinfo.ccf.R;
 import cn.cnlinfo.ccf.ui.activity.BaseActivity;
 import cn.cnlinfo.ccf.ui.activity.MainPageActivity;
 import cn.cnlinfo.ccf.utils.ObtainVerificationCode;
+import cn.cnlinfo.ccf.utils.ToastTool;
+
 import rx.Subscription;
 
 /**
@@ -86,12 +87,12 @@ public class LoginRegisterActivity extends BaseActivity implements LoginContact.
         String password = etPassword.getText().toString();
         String verificationCode = etVerificationCode.getText().toString();
         if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
-            toast("用户名或密码不能为空");
+            ToastTool.showShort(this,"用户名或密码不能为空");
         } else {
             if (verificationCode != null && verificationCode.toLowerCase().equals(tvGetVerificationCode.getText().toString().trim().toLowerCase())) {
-                loginPresenter.toLogin(Constant.getHost(),username,password);
+                loginPresenter.toLogin(1,username,password);
             } else {
-                toast("验证码不正确，请重新输入");
+                ToastTool.showShort(this,"验证码不正确，请重新输入");
             }
         }
     }
@@ -103,7 +104,7 @@ public class LoginRegisterActivity extends BaseActivity implements LoginContact.
      */
     @Override
     public void loginSuccess(Subscription subscription, String success) {
-        toast(success);
+        ToastTool.showShort(this,success);
         if (subscription.isUnsubscribed()){
             subscription.unsubscribe();
         }
@@ -120,7 +121,7 @@ public class LoginRegisterActivity extends BaseActivity implements LoginContact.
     @Override
     public void loginFail(Subscription subscription,String fail) {
         Logger.d(fail);
-        toast(fail);
+        ToastTool.showShort(this,fail);
         if (subscription.isUnsubscribed()){
             subscription.unsubscribe();
         }

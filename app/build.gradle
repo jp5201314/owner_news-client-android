@@ -79,12 +79,14 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
+            buildConfigField "boolean", "LOG_DEBUG", "true"
         }
         release {
             minifyEnabled false
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            buildConfigField "boolean", "LOG_DEBUG", "false"
         }
 
          //多个变体自定义输出配置，这是android studio3.0以下配置
@@ -138,146 +140,20 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    /**
-     *    事件分发
-     */
-
-    /**
-     *    View注入框架
-     */
-
-    /**
-     *    dialog的框架
-     */
-
-    /**
-     *    刷新的控件（上拉刷新，下拉加载 ）
-     */
-
-    /**
-     *    OkHttp
-     */
-
-    /**
-     *    fastJson
-     */
-
-    /**
-     *    Logger
-     */
-
-    /**
-     *       对话框
-     */
-
-    /**
-     *    进度对话框
-     */
-
-    /**
-     *    View注入框架
-     */
-
-    /**
-     *    dialog的框架
-     */
-
-    /**
-     *    刷新的控件（上拉刷新，下拉加载 ）
-     */
-
-    /**
-     *    OkHttp
-     */
-
-    /**
-     *    fastJson
-     */
-
-    /**
-     *    Logger
-     */
-
-    /**
-     *       对话框
-     */
-
-    /**
-     *    进度对话框
-     */
-
-    /**
-     *    运行时权限
-     */
-
-    /**
-     *   okhttpfinal
-     */
-
-    /**
-     *   TalkingData数据统计
-     */
-
-    /**
-     *   viewpageindicatord的使用
-     */
-
-    /**
-     *   图片加载框架 glide
-     */
-
-    /**
-     *   zxing 制作二维码
-     */
-
-    /**
-     * lite-orm数据库存储
-     */
-
-    /**
-     * RecycleView
-     */
-
-    /**
-     * 省市县三级联动
-     */
-
-    /**
-     *   MVCHelper 核心类库
-     */
-
-    /**
-     * Retrofit+Rxjava+Gson
-     */
-
-    /**
-     * HelloCharts
-     */
     compile 'com.flyco.dialog:FlycoDialog_Lib:1.2.6@aar'
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.jakewharton:butterknife:8.8.1'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'in.srain.cube:ultra-ptr:1.0.11'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.squareup.okio:okio:1.6.0'
-    compile 'com.alibaba:fastjson:1.2.37'
-    compile 'com.orhanobut:logger:1.15'
     compile 'cc.cloudist.acplibrary:library:1.2.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.github.hotchemi:permissionsdispatcher:2.2.0'
     provided 'com.github.hotchemi:permissionsdispatcher-processor:2.2.0'
-    compile files('libs/TalkingData_Analytics_Android_SDK_V2.2.37.jar')
-    compile 'cn.finalteam:okhttpfinal:2.0.7'
-    compile 'com.shizhefei:ViewPagerIndicator:1.1.6'
-    compile 'com.github.bumptech.glide:glide:3.6.1'
-    compile 'com.github.yuzhiqiang1993:zxing:2.0.0'
-    compile files('libs/lite-orm-1.7.0.jar')
-    compile 'com.facebook.fresco:fresco:0.8.1'
     compile 'com.android.support:recyclerview-v7:26.1.0'
-    compile 'liji.library.dev:citypickerview:2.0.1'
     compile 'com.shizhefei:MVCHelper-Library:1.3.2'
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
@@ -285,6 +161,6 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
     compile 'com.google.code.gson:gson:2.6.2'
-    compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
     implementation project(':library')
+    compile 'com.orhanobut:logger:1.15'
 }

@@ -1,7 +1,7 @@
 package cn.cnlinfo.ccf.ui.login;
 
 import cn.cnlinfo.ccf.UserSharedPreference;
-import cn.cnlinfo.ccf.rx.method.HttpMethod;
+import cn.cnlinfo.ccf.rx.method.RetrofitManager;
 import cn.cnlinfo.ccf.rx.response.entity.User;
 import rx.Subscriber;
 
@@ -17,8 +17,8 @@ public class LoginPresenter implements LoginContact.Presenter{
     }
 
     @Override
-    public void toLogin( String baseUrl, String userName, String passWord) {
-        HttpMethod.getInstance().startLogin(new Subscriber<User>() {
+    public void toLogin( int type, String userName, String passWord) {
+        RetrofitManager.getInstance(type).startLogin(new Subscriber<User>() {
             @Override
             public void onCompleted() {
                 view.loginSuccess(this,"登录成功");
@@ -35,6 +35,6 @@ public class LoginPresenter implements LoginContact.Presenter{
                 UserSharedPreference.getInstance().setIsFirstLogin(true);
                 UserSharedPreference.getInstance().setUser(user);
             }
-        }, baseUrl, userName, passWord);
+        }, userName, passWord);
     }
 }

@@ -38,13 +38,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import cn.cnlinfo.ccf.CCFApplication;
+import cn.cnlinfo.ccf.OwnerNewsApplication;
 import cn.cnlinfo.ccf.Constant;
 
 
 public class PhoneManager {
 
-    private final static Context CONTEXT = CCFApplication.getInstance();
+    private final static Context CONTEXT = OwnerNewsApplication.getInstance();
     private static int screenHeight = 0;
     private static int screenWidth = 0;
 

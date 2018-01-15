@@ -163,4 +163,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.2'
     implementation project(':library')
     compile 'com.orhanobut:logger:1.15'
+    compile 'com.hwangjr.rxbus:rxbus:1.0.6'
+    compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.4'
 }

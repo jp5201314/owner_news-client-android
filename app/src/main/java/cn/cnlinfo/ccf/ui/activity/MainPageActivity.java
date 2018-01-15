@@ -1,14 +1,17 @@
 package cn.cnlinfo.ccf.ui.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tendcloud.tenddata.TCAgent;
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.ashokvarma.bottomnavigation.TextBadgeItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,98 +19,35 @@ import butterknife.Unbinder;
 import cn.cnlinfo.ccf.R;
 import cn.cnlinfo.ccf.UserSharedPreference;
 import cn.cnlinfo.ccf.adapter.MainPageFragmentAdapter;
-import cn.cnlinfo.ccf.manager.AppManage;
+import cn.cnlinfo.ccf.fragment.CCMallFragment;
+import cn.cnlinfo.ccf.fragment.CCUnionFragment;
+import cn.cnlinfo.ccf.fragment.GaugePanelFragment;
+import cn.cnlinfo.ccf.fragment.MainPageFragment;
+import cn.cnlinfo.ccf.fragment.TradingCenterFragment;
 import cn.cnlinfo.ccf.view.StopScrollViewPager;
 
-public class MainPageActivity extends BaseActivity implements View.OnClickListener {
+public class MainPageActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener{
 
     @BindView(R.id.vp)
     StopScrollViewPager vp;
-    @BindView(R.id.tv_gauage_panel)
-    TextView tvGauagePanel;
-    @BindView(R.id.tv_trading_center)
-    TextView tvTradingCenter;
-    @BindView(R.id.tv_cc_mall)
-    TextView tvCcMall;
-    @BindView(R.id.tv_cc_union)
-    TextView tvCcUnion;
-    @BindView(R.id.tv_main_page)
-    TextView tvMainPage;
-    @BindView(R.id.ibt_back)
-    ImageButton ibtBack;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
+    @BindView(R.id.bt_negative_button)
+    BottomNavigationBar btNegativeButton;
     private MainPageFragmentAdapter pageFragmentAdapter;
     private Unbinder unbinder;
-    @BindView(R.id.ibt_add)
-    ImageButton ibtAdd;
     private long exitTime = 0;
     private long currentTime = 0;
+    private List<Fragment> fragmentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
         unbinder = ButterKnife.bind(this);
-        TCAgent.onPageStart(this, "主页");
         validLoadGuidePage();
         //设置为false是停止滑动ViewPager切换Fragment
         vp.setStopScroll(true);
         init();
     }
-    private void init() {
-        ibtBack.setVisibility(View.INVISIBLE);
-        tvTitle.setText("主页");
-        registerOnClickListener();
-        tvMainPage.setBackgroundColor(getResources().getColor(R.color.color_blue_4d8cd6));
-        ibtAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserSharedPreference.getInstance().logout();
-                AppManage.getInstance().exit(MainPageActivity.this);
-            }
-        });
-
-        pageFragmentAdapter = new MainPageFragmentAdapter(getSupportFragmentManager());
-        vp.setAdapter(pageFragmentAdapter);
-        vp.setOffscreenPageLimit(5);
-        vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                switch (position) {
-                    case 0:
-                        setTvMainPageBackgroundColor();
-                        break;
-                    case 1:
-                        setTvGauagePanelBackgroundColor();
-                        break;
-                    case 2:
-                        setTvTradingCenterBackgroundColor();
-                        break;
-                    case 3:
-                        setTvCcMallBackgroundColor();
-                        break;
-                    case 4:
-                        setTvCcUnionBackgroundColor();
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-    }
-
-
     /**
      * 验证是否加载引导页
      */
@@ -124,104 +64,58 @@ public class MainPageActivity extends BaseActivity implements View.OnClickListen
             }
         }
     }
-    private void registerOnClickListener() {
-        tvMainPage.setOnClickListener(this);
-        tvGauagePanel.setOnClickListener(this);
-        tvTradingCenter.setOnClickListener(this);
-        tvCcMall.setOnClickListener(this);
-        tvCcUnion.setOnClickListener(this);
+
+    private void init() {
+        fragmentList = new ArrayList<>();
+        pageFragmentAdapter = new MainPageFragmentAdapter(getFragmentList(), getSupportFragmentManager());
+        vp.setAdapter(pageFragmentAdapter);
+        vp.setOffscreenPageLimit(2);
+        setBtNegativeButton();
+    }
+
+    //将fragment放入到集合中
+    private List<Fragment> getFragmentList(){
+        fragmentList.add(0,new MainPageFragment());
+        fragmentList.add(1,new GaugePanelFragment());
+        fragmentList.add(2,new TradingCenterFragment());
+        fragmentList.add(3,new CCMallFragment());
+        fragmentList.add(4,new CCUnionFragment());
+        return fragmentList;
+    }
+
+    private void setBtNegativeButton(){
+        btNegativeButton.setTabSelectedListener(this);
+        btNegativeButton.setMode(BottomNavigationBar.MODE_FIXED);
+        btNegativeButton.setFirstSelectedPosition(0);
+        btNegativeButton.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);
+        btNegativeButton.setBarBackgroundColor(android.R.color.white);
+
+        TextBadgeItem badgeItem = new TextBadgeItem().setBackgroundColor(Color.RED).setText("99")//设置角标内容
+                .setHideOnSelect(true); //设置被选中时隐藏角标
+        btNegativeButton.setActiveColor(R.color.colorAccent) //设置选中的颜色
+                .setInActiveColor(R.color.colorPrimary);//未选中颜色
+
+        btNegativeButton.addItem(new BottomNavigationItem(R.drawable.ic_home_page, "首页"))//添加图标和文字
+                .addItem(new BottomNavigationItem(R.drawable.ic_trading_center,"仪表盘"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_trading_center, "店铺"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_cc_mall, "购物车"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_cc_union, "我的")
+                        .setBadgeItem(badgeItem))
+                .initialise();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        TCAgent.onPageEnd(this, "主页");
     }
 
-    @Override
-    public void onClick(View v) {
-        int viewId = v.getId();
-        switch (viewId) {
-            case R.id.tv_main_page:
-                vp.setCurrentItem(0, false);
-                setTvMainPageBackgroundColor();
-
-                break;
-            case R.id.tv_gauage_panel:
-                //smoothScroll为false就是去除切换fragment的动画效果
-                vp.setCurrentItem(1, false);
-                setTvGauagePanelBackgroundColor();
-
-                break;
-            case R.id.tv_trading_center:
-                vp.setCurrentItem(2, false);
-                setTvTradingCenterBackgroundColor();
-
-                break;
-            case R.id.tv_cc_mall:
-                vp.setCurrentItem(3, false);
-                setTvCcMallBackgroundColor();
-
-                break;
-            case R.id.tv_cc_union:
-                vp.setCurrentItem(4, false);
-                setTvCcUnionBackgroundColor();
-
-                break;
-
-        }
-    }
-
-    private void setTvMainPageBackgroundColor() {
-        tvMainPage.setBackgroundColor(getResources().getColor(R.color.color_blue_4d8cd6));
-        tvGauagePanel.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvCcUnion.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvCcMall.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvTradingCenter.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvTitle.setText("主页");
-    }
-
-    private void setTvGauagePanelBackgroundColor() {
-        tvMainPage.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvGauagePanel.setBackgroundColor(getResources().getColor(R.color.color_blue_4d8cd6));
-        tvCcUnion.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvCcMall.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvTradingCenter.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvTitle.setText("仪表盘");
-    }
-
-    private void setTvCcUnionBackgroundColor() {
-        tvMainPage.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvGauagePanel.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvCcUnion.setBackgroundColor(getResources().getColor(R.color.color_blue_4d8cd6));
-        tvCcMall.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvTradingCenter.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvTitle.setText("CC联盟");
-    }
-
-    private void setTvCcMallBackgroundColor() {
-        tvMainPage.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvGauagePanel.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvCcUnion.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvCcMall.setBackgroundColor(getResources().getColor(R.color.color_blue_4d8cd6));
-        tvTradingCenter.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvTitle.setText("CC商城");
-    }
-
-    private void setTvTradingCenterBackgroundColor() {
-        tvMainPage.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvGauagePanel.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvCcUnion.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvCcMall.setBackgroundColor(getResources().getColor(R.color.color_white_faf9f9));
-        tvTradingCenter.setBackgroundColor(getResources().getColor(R.color.color_blue_4d8cd6));
-        tvTitle.setText("交易中心");
-    }
+    //判断连续按返回键退出程序
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             currentTime = System.currentTimeMillis();
-            if((currentTime-exitTime) > 2000){
+            if ((currentTime - exitTime) > 2000) {
                 Toast.makeText(this, "再按一次后退键退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = currentTime;
             } else {
@@ -231,5 +125,21 @@ public class MainPageActivity extends BaseActivity implements View.OnClickListen
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    //点击tab换到该位置的fragment
+    @Override
+    public void onTabSelected(int position) {
+        btNegativeButton.selectTab(position);
+    }
+
+    @Override
+    public void onTabUnselected(int position) {
+
+    }
+
+    @Override
+    public void onTabReselected(int position) {
+
     }
 }

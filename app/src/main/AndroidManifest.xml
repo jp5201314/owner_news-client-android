@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="cn.cnlinfo.ccf">
+
+    <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 允许读取网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 允许读取wifi网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 允许应用以只读的方式访问手机设备的信息，通过获取的信息来唯一标识用户 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 获取当前应用是否在显示应用，可以更精准的统计用户活跃 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!-- 获取振动通知 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 二维码权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- lite-orn权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <uses-feature android:name="android.hardware.sensor.accelerometer" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+
+    <application
+        android:name=".CCFApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ccf"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/FullScreen">
+        <activity
+            android:name=".ui.activity.MainPageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/PopupMenuTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- ********************************************TALKING DATA********************************************************** -->
+
+
+        <!-- TalkingData -->
+        <meta-data
+            android:name="TD_APP_ID"
+            android:value="5349CA59AD0142739106215E4ED1679D" />
+        <meta-data
+            android:name="TD_CHANNEL_ID"
+            android:value="${TD_CHANNEL_ID_VALUE}" />
+
+        <!-- 登录注册展示界面 -->
+        <activity
+            android:name=".ui.login.LoginRegisterActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <!-- 引导页 -->
+        <activity
+            android:name=".ui.activity.GuideActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.WebActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NormalFullScreen">
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

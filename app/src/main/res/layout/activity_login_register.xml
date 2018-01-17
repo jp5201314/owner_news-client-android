@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="cn.cnlinfo.ccf.ui.login.LoginRegisterActivity">
+    tools:context="cn.cnlinfo.ccf.cn.cnlinfo.news.ui.login.LoginRegisterActivity">
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="256dp"
@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:text="用户名" />
 
-                    <cn.cnlinfo.ccf.view.CleanEditText
+                    <cn.cnlinfo.news.view.CleanEditText
                         android:id="@+id/et_username"
                         android:layout_width="match_parent"
                         android:layout_height="32dp"
@@ -98,7 +98,7 @@
                         android:layout_height="wrap_content"
                         android:text="密码" />
 
-                    <cn.cnlinfo.ccf.view.CleanEditText
+                    <cn.cnlinfo.news.view.CleanEditText
                         android:id="@+id/et_password"
                         android:layout_width="match_parent"
                         android:layout_height="32dp"
@@ -128,7 +128,7 @@
                         android:layout_marginTop="3dp"
                         android:orientation="horizontal">
 
-                        <cn.cnlinfo.ccf.view.CleanEditText
+                        <cn.cnlinfo.news.view.CleanEditText
                             android:id="@+id/et_verification_code"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"

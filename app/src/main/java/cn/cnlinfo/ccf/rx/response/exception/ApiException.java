@@ -6,8 +6,26 @@ package cn.cnlinfo.ccf.rx.response.exception;
 
 public class ApiException extends Exception {
     private int  exceptionCode;
-    public  ApiException(int exceptionCode){
+    private String errorMsg;
+
+    public ApiException(int exceptionCode, String errorMsg) {
+        this.exceptionCode = exceptionCode;
+        this.errorMsg = errorMsg;
+    }
+
+    public int getExceptionCode() {
+        return exceptionCode;
+    }
+
+    public void setExceptionCode(int exceptionCode) {
         this.exceptionCode = exceptionCode;
     }
 
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
 }

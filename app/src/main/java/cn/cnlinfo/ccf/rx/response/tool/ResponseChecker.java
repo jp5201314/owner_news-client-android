@@ -15,7 +15,7 @@ public class ResponseChecker<T> implements Func1<HttpResult<DataEntity<T>>,T>{
     public T call(HttpResult<DataEntity<T>> dataEntityHttpResult) {
         if (dataEntityHttpResult.getMessageID() != 0) {
             try {
-                throw new ApiException(dataEntityHttpResult.getMessageID());
+                throw new ApiException(dataEntityHttpResult.getMessageID(),dataEntityHttpResult.getContent());
             } catch (Exception e) {
                 e.printStackTrace();
             }

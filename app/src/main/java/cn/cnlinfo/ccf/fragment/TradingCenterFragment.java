@@ -1,12 +1,6 @@
 package cn.cnlinfo.ccf.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.tendcloud.tenddata.TCAgent;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -18,21 +12,18 @@ import cn.cnlinfo.ccf.R;
 
 public class TradingCenterFragment extends BaseFragment {
     private Unbinder unbinder;
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_trading_center, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        TCAgent.onPageStart(getActivity(), "交易中心");
-        return view;
+    protected void onCreateViewLazy(Bundle savedInstanceState) {
+        super.onCreateViewLazy(savedInstanceState);
+        setContentView(R.layout.fragment_trading_center);
+        unbinder = ButterKnife.bind(this, getContentView());
     }
 
-
-
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    protected void onDestroyViewLazy() {
+        super.onDestroyViewLazy();
         unbinder.unbind();
-        TCAgent.onPageEnd(getActivity(), "交易中心");
     }
+
 }

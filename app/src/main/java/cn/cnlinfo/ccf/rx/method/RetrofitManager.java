@@ -30,6 +30,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Subscriber;
+import rx.Subscription;
 
 /**
  * /**
@@ -154,6 +155,7 @@ public class RetrofitManager {
     public OkHttpClient getInstance() {
         synchronized (RetrofitManager.class) {
             if (okHttpClient == null) {
+                //加入cache缓存和增加拦截器，打印输出拦截的包的数据
                 okHttpClient = new OkHttpClient().newBuilder().cache(cache).addInterceptor(mLoggingInterceptor).addNetworkInterceptor(mRewriteCacheControlInterceptor).connectTimeout(5, TimeUnit.SECONDS).writeTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS).retryOnConnectionFailure(true).build();
             }
         }
@@ -163,12 +165,11 @@ public class RetrofitManager {
 
     /**
      * 登录操作
-     *
      * @param subscriber 观察者，也叫订阅者
      * @param userName   用户名
      * @param passWord   密码
      */
-    public void startLogin(Subscriber<User> subscriber, String userName, String passWord) {
-        httpService.login(userName, passWord).map(new ResponseChecker<User>()).compose(new BaseObservableTransfer<User>()).subscribe(subscriber);
+    public Subscription startLogin(Subscriber<User> subscriber, String userName, String passWord) {
+        return httpService.login(userName, passWord).map(new ResponseChecker<User>()).compose(new BaseObservableTransfer<User>()).subscribe(subscriber);
     }
 }

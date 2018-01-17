@@ -10,11 +10,11 @@ import rx.Subscription;
 
 public interface LoginContact {
     interface View extends IBaseView{
-        void loginSuccess(Subscription subscription,String success);
-        void loginFail(Subscription subscription,String fail);
+        void loginSuccess(Subscription subscription);
+        void loginFail(Subscription subscription);
     }
 
     interface Presenter extends IBasePresenter {
-        void toLogin( int type, String userName, String passWord);
+        Subscription toLogin(int type, String userName, String passWord);
     }
 }

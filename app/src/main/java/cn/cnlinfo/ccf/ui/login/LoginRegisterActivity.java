@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -18,7 +16,6 @@ import cn.cnlinfo.ccf.ui.activity.BaseActivity;
 import cn.cnlinfo.ccf.ui.activity.MainPageActivity;
 import cn.cnlinfo.ccf.utils.ObtainVerificationCode;
 import cn.cnlinfo.ccf.utils.ToastTool;
-
 import rx.Subscription;
 
 /**
@@ -90,7 +87,7 @@ public class LoginRegisterActivity extends BaseActivity implements LoginContact.
             ToastTool.showShort(this,"用户名或密码不能为空");
         } else {
             if (verificationCode != null && verificationCode.toLowerCase().equals(tvGetVerificationCode.getText().toString().trim().toLowerCase())) {
-                loginPresenter.toLogin(1,username,password);
+               loginPresenter.toLogin(1,username,password);
             } else {
                 ToastTool.showShort(this,"验证码不正确，请重新输入");
             }
@@ -100,11 +97,9 @@ public class LoginRegisterActivity extends BaseActivity implements LoginContact.
     /**
      * 登录成功
      * @param subscription
-     * @param success
      */
     @Override
-    public void loginSuccess(Subscription subscription, String success) {
-        ToastTool.showShort(this,success);
+    public void loginSuccess(Subscription subscription) {
         if (subscription.isUnsubscribed()){
             subscription.unsubscribe();
         }
@@ -116,14 +111,26 @@ public class LoginRegisterActivity extends BaseActivity implements LoginContact.
     /**
      * 登录失败
      * @param subscription
-     * @param fail
      */
     @Override
-    public void loginFail(Subscription subscription,String fail) {
-        Logger.d(fail);
-        ToastTool.showShort(this,fail);
+    public void loginFail(Subscription subscription) {
         if (subscription.isUnsubscribed()){
             subscription.unsubscribe();
         }
+    }
+    //显示登录进度
+    @Override
+    public void showProgress() {
+        showWaitingDialog(true,"正在登录");
+    }
+    //关闭进度
+    @Override
+    public void hideProgress() {
+        showWaitingDialog(false);
+    }
+    //显示进度
+    @Override
+    public void toast(String msg) {
+        ToastTool.showShort(this,msg);
     }
 }

@@ -3,6 +3,7 @@ package cn.cnlinfo.ccf.ui.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ import cn.cnlinfo.ccf.fragment.MainPageFragment;
 import cn.cnlinfo.ccf.fragment.TradingCenterFragment;
 import cn.cnlinfo.ccf.view.StopScrollViewPager;
 
-public class MainPageActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener{
+public class MainPageActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener,ViewPager.OnPageChangeListener{
 
     @BindView(R.id.vp)
     StopScrollViewPager vp;
@@ -69,7 +70,8 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
         fragmentList = new ArrayList<>();
         pageFragmentAdapter = new MainPageFragmentAdapter(getFragmentList(), getSupportFragmentManager());
         vp.setAdapter(pageFragmentAdapter);
-        vp.setOffscreenPageLimit(2);
+        vp.setOffscreenPageLimit(1);
+        vp.setOnPageChangeListener(this);
         setBtNegativeButton();
     }
 
@@ -84,7 +86,6 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
     }
 
     private void setBtNegativeButton(){
-        btNegativeButton.setTabSelectedListener(this);
         btNegativeButton.setMode(BottomNavigationBar.MODE_FIXED);
         btNegativeButton.setFirstSelectedPosition(0);
         btNegativeButton.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);
@@ -102,6 +103,7 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
                 .addItem(new BottomNavigationItem(R.drawable.ic_cc_union, "我的")
                         .setBadgeItem(badgeItem))
                 .initialise();
+        btNegativeButton.setTabSelectedListener(this);
     }
 
     @Override
@@ -127,10 +129,9 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
         return super.onKeyDown(keyCode, event);
     }
 
-    //点击tab换到该位置的fragment
     @Override
     public void onTabSelected(int position) {
-        btNegativeButton.selectTab(position);
+        vp.setCurrentItem(position);
     }
 
     @Override
@@ -140,6 +141,21 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
 
     @Override
     public void onTabReselected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+            btNegativeButton.selectTab(position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
 
     }
 }

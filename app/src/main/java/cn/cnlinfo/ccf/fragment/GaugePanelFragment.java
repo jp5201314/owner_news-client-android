@@ -1,13 +1,9 @@
 package cn.cnlinfo.ccf.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.tendcloud.tenddata.TCAgent;
-
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.cnlinfo.ccf.R;
 
 /**
@@ -16,21 +12,18 @@ import cn.cnlinfo.ccf.R;
 
 public class GaugePanelFragment extends BaseFragment {
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        TCAgent.onPageStart(getActivity(), "仪表盘");
-        View view = inflater.inflate(R.layout.fragment_gauge_panel, container, false);
-
-        return view;
-
-    }
-
+    private Unbinder unbinder;
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        TCAgent.onPageEnd(getActivity(), "仪表盘");
+    protected void onCreateViewLazy(Bundle savedInstanceState) {
+        super.onCreateViewLazy(savedInstanceState);
+        setContentView(R.layout.fragment_gauge_panel);
+        unbinder = ButterKnife.bind(this,getContentView());
     }
 
+    @Override
+    protected void onDestroyViewLazy() {
+        super.onDestroyViewLazy();
+        unbinder.unbind();
+    }
 }

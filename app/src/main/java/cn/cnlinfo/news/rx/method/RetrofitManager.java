@@ -163,7 +163,7 @@ public class RetrofitManager {
     }
 
 
-    /**
+/**
      * 登录操作
      * @param subscriber 观察者，也叫订阅者
      * @param userName   用户名
@@ -172,4 +172,5 @@ public class RetrofitManager {
     public Subscription startLogin(Subscriber<User> subscriber, String userName, String passWord) {
         return httpService.login(userName, passWord).map(new ResponseChecker<User>()).compose(new BaseObservableTransfer<User>()).subscribe(subscriber);
     }
+
 }

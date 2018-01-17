@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.orhanobut.logger.Logger;
 
+import cn.bmob.v3.Bmob;
 import cn.cnlinfo.news.manager.ACache;
 import cn.cnlinfo.news.ui.login.LoginRegisterActivity;
 
@@ -25,6 +26,8 @@ public class OwnerNewsApplication extends Application {
         INSTANCE = this;
         mContext = getApplicationContext();
         Logger.init("owner_news");
+        //初始化Bmob
+        Bmob.initialize(this,"223ee327a16960d28bd66cf3207f38e2");
     }
 
 

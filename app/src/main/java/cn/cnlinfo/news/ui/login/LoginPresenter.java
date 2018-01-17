@@ -17,6 +17,13 @@ public class LoginPresenter implements LoginContact.Presenter{
         this.view = view;
     }
 
+    /**
+     *
+     * @param type  主机类型
+     * @param userName  用户名
+     * @param passWord 密码
+     * @return
+     */
     @Override
     public Subscription toLogin(int type, String userName, String passWord) {
         return RetrofitManager.getInstance(type).startLogin(new HandleRequestCallBack<User>() {

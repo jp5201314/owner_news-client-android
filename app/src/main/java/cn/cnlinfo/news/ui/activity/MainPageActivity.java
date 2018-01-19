@@ -2,8 +2,12 @@ package cn.cnlinfo.news.ui.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
@@ -27,12 +31,20 @@ import cn.cnlinfo.news.fragment.MainPageFragment;
 import cn.cnlinfo.news.fragment.TradingCenterFragment;
 import cn.cnlinfo.news.view.StopScrollViewPager;
 
-public class MainPageActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener,ViewPager.OnPageChangeListener{
+public class MainPageActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener, ViewPager.OnPageChangeListener {
 
     @BindView(R.id.vp)
     StopScrollViewPager vp;
     @BindView(R.id.bt_negative_button)
     BottomNavigationBar btNegativeButton;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.nav_view)
+    NavigationView navView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
     private MainPageFragmentAdapter pageFragmentAdapter;
     private Unbinder unbinder;
     private long exitTime = 0;
@@ -48,7 +60,9 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
         //设置为false是停止滑动ViewPager切换Fragment
         vp.setStopScroll(true);
         init();
+        setSupportActionBar(toolbar);
     }
+
     /**
      * 验证是否加载引导页
      */
@@ -76,16 +90,16 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
     }
 
     //将fragment放入到集合中
-    private List<Fragment> getFragmentList(){
-        fragmentList.add(0,new MainPageFragment());
-        fragmentList.add(1,new GaugePanelFragment());
-        fragmentList.add(2,new TradingCenterFragment());
-        fragmentList.add(3,new CCMallFragment());
-        fragmentList.add(4,new CCUnionFragment());
+    private List<Fragment> getFragmentList() {
+        fragmentList.add(0, new MainPageFragment());
+        fragmentList.add(1, new GaugePanelFragment());
+        fragmentList.add(2, new TradingCenterFragment());
+        fragmentList.add(3, new CCMallFragment());
+        fragmentList.add(4, new CCUnionFragment());
         return fragmentList;
     }
 
-    private void setBtNegativeButton(){
+    private void setBtNegativeButton() {
         btNegativeButton.setMode(BottomNavigationBar.MODE_FIXED);
         btNegativeButton.setFirstSelectedPosition(0);
         btNegativeButton.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);
@@ -97,7 +111,7 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
                 .setInActiveColor(R.color.colorPrimary);//未选中颜色
 
         btNegativeButton.addItem(new BottomNavigationItem(R.drawable.ic_home_page, "首页"))//添加图标和文字
-                .addItem(new BottomNavigationItem(R.drawable.ic_trading_center,"仪表盘"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_trading_center, "仪表盘"))
                 .addItem(new BottomNavigationItem(R.drawable.ic_trading_center, "店铺"))
                 .addItem(new BottomNavigationItem(R.drawable.ic_cc_mall, "购物车"))
                 .addItem(new BottomNavigationItem(R.drawable.ic_cc_union, "我的")
@@ -129,6 +143,11 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
         return super.onKeyDown(keyCode, event);
     }
 
+    /**
+     * 底部导航栏选择监听
+     *
+     * @param position
+     */
     @Override
     public void onTabSelected(int position) {
         vp.setCurrentItem(position);
@@ -144,6 +163,13 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
 
     }
 
+    /**
+     * viewpager页面滑动监听
+     *
+     * @param position
+     * @param positionOffset
+     * @param positionOffsetPixels
+     */
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -151,7 +177,7 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
 
     @Override
     public void onPageSelected(int position) {
-            btNegativeButton.selectTab(position);
+        btNegativeButton.selectTab(position);
     }
 
     @Override

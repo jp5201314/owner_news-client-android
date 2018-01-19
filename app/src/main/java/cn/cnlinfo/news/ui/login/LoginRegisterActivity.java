@@ -121,7 +121,7 @@ public class LoginRegisterActivity extends BaseActivity implements LoginContact.
     //显示登录进度
     @Override
     public void showProgress() {
-        showWaitingDialog(true,"正在登录");
+        showWaitingDialog(true);
     }
     //关闭进度
     @Override

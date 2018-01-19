@@ -10,12 +10,11 @@ import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.concurrent.TimeUnit;
 
+import cn.bmob.v3.BmobUser;
 import cn.cnlinfo.news.Constant;
 import cn.cnlinfo.news.OwnerNewsApplication;
 import cn.cnlinfo.news.rx.BaseObservableTransfer;
 import cn.cnlinfo.news.rx.net_inter.HttpService;
-import cn.cnlinfo.news.rx.response.entity.User;
-import cn.cnlinfo.news.rx.response.tool.ResponseChecker;
 import cn.cnlinfo.news.utils.NetUtil;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -163,14 +162,21 @@ public class RetrofitManager {
     }
 
 
-/**
+    /**
      * 登录操作
+     *
      * @param subscriber 观察者，也叫订阅者
      * @param userName   用户名
      * @param passWord   密码
      */
-    public Subscription startLogin(Subscriber<User> subscriber, String userName, String passWord) {
+/*    public Subscription startLogin(Subscriber<User> subscriber, String userName, String passWord) {
         return httpService.login(userName, passWord).map(new ResponseChecker<User>()).compose(new BaseObservableTransfer<User>()).subscribe(subscriber);
+    }*/
+    public Subscription startLogin(Subscriber<BmobUser> subscriber, String userName, String passWord) {
+        /**
+         * http://doc.bmob.cn/data/android/develop_doc/#_76
+         */
+        return BmobUser.loginByAccountObservable(BmobUser.class,userName,passWord).compose(new BaseObservableTransfer<BmobUser>()).subscribe(subscriber);
     }
 
 }

@@ -1,5 +1,7 @@
 package cn.cnlinfo.news.ui.callback;
 
+import com.orhanobut.logger.Logger;
+
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
@@ -14,7 +16,7 @@ import rx.Subscriber;
  * 把回调各个方法统一处理，并且这里对返回错误做了统一处理
  */
 
-public abstract class HandleRequestCallBack<T> extends Subscriber<T> {
+public abstract class HandleRequestCallBack<T> extends Subscriber<T>{
 
 
     @Override
@@ -25,12 +27,13 @@ public abstract class HandleRequestCallBack<T> extends Subscriber<T> {
 
     @Override
     public void onCompleted() {
+        Logger.d("completed");
         requestCompleted();
     }
 
     @Override
     public void onError(Throwable e) {
-        String errorMsg = null;
+        String errorMsg = e.getMessage();
         if (e instanceof HttpException) {
             switch (((HttpException) e).code()) {
                 case 403:
@@ -60,6 +63,7 @@ public abstract class HandleRequestCallBack<T> extends Subscriber<T> {
     @Override
     public void onNext(T t) {
         requestDataSuccess(t);
+        requestCompleted();
     }
 
     public abstract void requestDataStart();

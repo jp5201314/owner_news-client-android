@@ -3,6 +3,7 @@ package cn.cnlinfo.news;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import cn.bmob.v3.BmobUser;
 import cn.cnlinfo.news.manager.ACache;
 import cn.cnlinfo.news.rx.response.entity.User;
 
@@ -26,6 +27,7 @@ public class UserSharedPreference {
     private static final String CACHE_JWT_TOKEN_KEY = "jwt_token";
     private static final String CACHE_LATEST_VERSION_CODE_KEY = "latest_version_code";
     private static final String CACHE_USER_KEY = "user";
+    private static final String CACHE_BMOBUSER_KEY = "bmobuser";
     private static final String CACHE_PHONE_PASSWORD_KEY = "phone_password";
 
     public UserSharedPreference(Context context) {
@@ -44,6 +46,10 @@ public class UserSharedPreference {
 
     public void setUser(User user){
         mACache.put(CACHE_USER_KEY,user);
+    }
+
+    public void setBmobUser(BmobUser user){
+        mACache.put(CACHE_BMOBUSER_KEY,user);
     }
 
     public User getUser(){

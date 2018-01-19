@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">碳控因子</string>
+    <string name="app_name">owner_news</string>
 
     <!--底部按钮值-->
     <string name="gauage_panel">仪表盘</string>

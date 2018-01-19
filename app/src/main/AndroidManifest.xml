@@ -34,7 +34,7 @@
     <application
         android:name=".OwnerNewsApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ccf"
+        android:icon="@mipmap/news"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/FullScreen">
@@ -77,7 +77,7 @@
         <!-- android7.0为防止直接写出文件路径的不安全，提供了此种方式来保护文件安全 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="cn.cnlinfo.news.fileprovider"
+            android:authorities="cn.cnlinfo.news.file_provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

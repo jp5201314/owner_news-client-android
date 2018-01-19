@@ -51,7 +51,7 @@ public class NotificationUtil {
         Intent intent = new Intent();
         PendingIntent pendingIntent = PendingIntent.getActivity(context,Integer.valueOf(code),intent,PendingIntent.FLAG_CANCEL_CURRENT);
         builder.setContentIntent(pendingIntent);
-        builder.setSmallIcon(R.mipmap.ccf)
+        builder.setSmallIcon(R.mipmap.news)
                 .setContentTitle("手机验证")
                 .setContentText("【碳控因子】欢迎您,您的验证码是"+code)
                 .setWhen(System.currentTimeMillis())

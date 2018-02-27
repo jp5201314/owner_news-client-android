@@ -19,7 +19,7 @@
 
 
 
-
+    <color name="color_green_009688">#009688</color>
     <color name="color_green_3bb4bc">#3BB4BC</color>
     <color name="color_green_3299a0">#3299a0</color>
     <color name="color_green_d4ebeb">#D4EBEB</color>
@@ -80,4 +80,9 @@
 
     <color name="color_red_dc6068">#dc6068</color>
     <color name="color_red_fe4a4a">#fe4a4a</color>
+
+    <color name="google_red">#EA4335</color>
+    <color name="google_yellow">#FBBC05</color>
+    <color name="google_blue">#4285F4</color>
+    <color name="google_green">#34A853</color>
 </resources>

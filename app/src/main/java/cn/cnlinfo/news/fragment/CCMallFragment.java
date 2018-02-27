@@ -25,5 +25,4 @@ public class CCMallFragment extends BaseFragment {
         super.onDestroyViewLazy();
         unbinder.unbind();
     }
-
 }

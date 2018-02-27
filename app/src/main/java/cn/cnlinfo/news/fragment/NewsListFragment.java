@@ -7,16 +7,16 @@ import butterknife.Unbinder;
 import cn.cnlinfo.news.R;
 
 /**
- * Created by Administrator on 2017/10/11 0011.
+ * Created by JP on 2017/10/11 0011.
  */
 
-public class MainPageFragment extends BaseFragment {
+public class NewsListFragment extends BaseFragment {
     private Unbinder unbinder;
 
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
-        setContentView(R.layout.fragment_main_page);
+        setContentView(R.layout.fragment_news);
         unbinder = ButterKnife.bind(this, getContentView());
     }
 

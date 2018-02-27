@@ -1,4 +1,4 @@
-package cn.cnlinfo.news.ui.login;
+package cn.cnlinfo.news.ui.activity.login;
 
 import com.orhanobut.logger.Logger;
 

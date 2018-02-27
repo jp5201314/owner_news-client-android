@@ -11,9 +11,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -32,7 +34,7 @@ import cn.cnlinfo.news.manager.LifeCycleComponentManager;
 import cn.cnlinfo.news.manager.PhoneManager;
 import cn.cnlinfo.news.manager.SystemBarTintManager;
 import cn.cnlinfo.news.receiver.NetworkConnectChangedReceiver;
-import cn.cnlinfo.news.ui.login.LoginRegisterActivity;
+import cn.cnlinfo.news.ui.activity.login.LoginRegisterActivity;
 import cn.cnlinfo.news.view.RefreshHeaderView;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -55,7 +57,6 @@ public class BaseActivity extends AppCompatActivity implements IComponentContain
         AppManage.getInstance().addActivity(this);
         receiver = new NetworkConnectChangedReceiver();
         registerNetworkConnectChangedReceiver();
-
     }
 
     private void registerNetworkConnectChangedReceiver() {
@@ -76,6 +77,11 @@ public class BaseActivity extends AppCompatActivity implements IComponentContain
         return res;
     }
 
+
+    /**
+     * 设置状态栏的背景颜色
+     * @param color
+     */
     protected void setStatusBarColor(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
@@ -83,6 +89,27 @@ public class BaseActivity extends AppCompatActivity implements IComponentContain
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(color);//通知栏所需颜色
         }
+    }
+
+    /**
+     * 初始化 Toolbar
+     *
+     * @param toolbar
+     * @param homeAsUpEnabled
+     * @param title
+     * http://blog.csdn.net/lovexieyuan520/article/details/9974929  解释setDisplayHomeAsUpEnabled
+     */
+    protected void initToolBar(Toolbar toolbar, boolean homeAsUpEnabled, String title) {
+        toolbar.setTitle(title);
+        setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.color_green_009688));//设置Toolbar的背景颜色
+        getSupportActionBar().setDisplayHomeAsUpEnabled(homeAsUpEnabled);//给左上角图标的左边加上一个返回的图标并且可以点击
+        getSupportActionBar().setHomeButtonEnabled(true);//setHomeButtonEnabled这个小于4.0版本的默认值为true的。但是在4.0及其以上是false，该方法的作用：决定左上角的图标是否可以点击。没有向左的小图标。 true 图标可以点击  false 不可以点击。
+    }
+
+    protected void initToolBar(Toolbar toolbar, boolean homeAsUpEnabled, int resTitle) {
+        initToolBar(toolbar, homeAsUpEnabled, getString(resTitle));
     }
 
     protected void showWaitingDialog(boolean show) {

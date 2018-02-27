@@ -8,7 +8,7 @@ import com.orhanobut.logger.Logger;
 
 import cn.bmob.v3.Bmob;
 import cn.cnlinfo.news.manager.ACache;
-import cn.cnlinfo.news.ui.login.LoginRegisterActivity;
+import cn.cnlinfo.news.ui.activity.login.LoginRegisterActivity;
 
 
 /**

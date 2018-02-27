@@ -20,7 +20,7 @@ import com.tendcloud.tenddata.TCAgent;
 import java.util.ArrayList;
 
 import cn.cnlinfo.news.R;
-import cn.cnlinfo.news.ui.login.LoginRegisterActivity;
+import cn.cnlinfo.news.ui.activity.login.LoginRegisterActivity;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 

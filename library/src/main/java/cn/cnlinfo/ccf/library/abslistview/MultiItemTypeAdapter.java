@@ -76,8 +76,7 @@ public class MultiItemTypeAdapter<T> extends BaseAdapter {
         mItemViewDelegateManager.convert(viewHolder, item, position);
     }
 
-    public void onViewHolderCreated(ViewHolder holder , View itemView )
-    {}
+    public void onViewHolderCreated(ViewHolder holder , View itemView ) {}
 
     @Override
     public int getCount() {

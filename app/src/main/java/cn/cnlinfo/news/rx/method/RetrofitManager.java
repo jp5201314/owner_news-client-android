@@ -179,4 +179,5 @@ public class RetrofitManager {
         return BmobUser.loginByAccountObservable(BmobUser.class,userName,passWord).compose(new BaseObservableTransfer<BmobUser>()).subscribe(subscriber);
     }
 
+
 }

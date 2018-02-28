@@ -1,4 +1,4 @@
-package cn.cnlinfo.news.fragment;
+package cn.cnlinfo.news.ui.fragment;
 
 /**
  * Created by cj on 2016/9/12.

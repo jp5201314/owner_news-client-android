@@ -8,5 +8,4 @@ public interface IBaseView {
     void showProgress();
     void hideProgress();
     void toast(String msg);
-
 }

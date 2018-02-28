@@ -1,4 +1,4 @@
-package cn.cnlinfo.news.fragment;
+package cn.cnlinfo.news.ui.fragment;
 
 import android.os.Bundle;
 
@@ -6,18 +6,20 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.cnlinfo.news.R;
 
+
 /**
- * Created by JP on 2017/10/11 0011.
+ * Created by Administrator on 2017/10/11 0011.
  */
 
-public class TradingCenterFragment extends BaseFragment {
+public class GaugePanelFragment extends BaseFragment {
+
     private Unbinder unbinder;
 
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
-        setContentView(R.layout.fragment_trading_center);
-        unbinder = ButterKnife.bind(this, getContentView());
+        setContentView(R.layout.fragment_gauge_panel);
+        unbinder = ButterKnife.bind(this,getContentView());
     }
 
     @Override
@@ -25,5 +27,4 @@ public class TradingCenterFragment extends BaseFragment {
         super.onDestroyViewLazy();
         unbinder.unbind();
     }
-
 }

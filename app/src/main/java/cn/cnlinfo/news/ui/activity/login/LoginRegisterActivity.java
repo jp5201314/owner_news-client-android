@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.cnlinfo.news.R;
 import cn.cnlinfo.news.ui.activity.BaseActivity;
-import cn.cnlinfo.news.ui.activity.MainPageActivity;
+import cn.cnlinfo.news.ui.activity.main.MainPageActivity;
 import cn.cnlinfo.news.utils.ObtainVerificationCode;
 import cn.cnlinfo.news.utils.ToastTool;
 import rx.Subscription;

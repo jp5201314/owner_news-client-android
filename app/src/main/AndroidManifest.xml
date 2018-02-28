@@ -53,7 +53,7 @@
 
         <!-- 主页 -->
         <activity
-            android:name=".ui.activity.MainPageActivity"
+            android:name=".ui.activity.main.MainPageActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

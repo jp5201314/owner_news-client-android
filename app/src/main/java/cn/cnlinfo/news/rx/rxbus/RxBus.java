@@ -1,50 +1,101 @@
 package cn.cnlinfo.news.rx.rxbus;
 
-/**
- * Created by Administrator on 2018/1/12 0012.
- */
+import android.support.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import rx.Observable;
 import rx.subjects.PublishSubject;
-import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
 
 /**
- * RxBus
- * Created by YoKeyword on 2015/6/17.
+ * ClassName: RxBus<p>
+ * Author:oubowu<p>
+ * Fuction: Rxjava实现的bus<p>
+ * CreateDate:2016/2/14 13:15<p>
+ * UpdateUser:<p>
+ * UpdateDate:<p>
  */
 public class RxBus {
-    private static volatile RxBus defaultInstance;
 
-    private final Subject<Object, Object> bus;
-    // PublishSubject只会把在订阅发生的时间点之后来自原始Observable的数据发射给观察者
-    public RxBus() {
-        bus = new SerializedSubject<>(PublishSubject.create());
+    private volatile static RxBus sInstance;
+
+    private RxBus() {
     }
-    // 单例RxBus
-    public static RxBus getDefault() {
-        if (defaultInstance == null) {
+
+    public static RxBus get() {
+        if (sInstance == null) {
             synchronized (RxBus.class) {
-                if (defaultInstance == null) {
-                    defaultInstance = new RxBus();
+                if (sInstance == null) {
+                    sInstance = new RxBus();
                 }
             }
         }
-        return defaultInstance ;
+        return sInstance;
     }
-    // 发送一个新的事件
-    public void post (Object o) {
-        bus.onNext(o);
+
+    /**
+     * 存储某个标签的Subject集合
+     */
+    private ConcurrentMap<Object, List<Subject>> mSubjectMapper = new ConcurrentHashMap<>();
+
+    /**
+     * 注册事件
+     *
+     * @param tag   标签
+     * @param clazz 类
+     * @param <T>   类型
+     * @return 被观察者
+     */
+    public <T> Observable<T> register(@NonNull Object tag, @NonNull Class<T> clazz) {
+        List<Subject> subjectList = mSubjectMapper.get(tag);
+        if (null == subjectList) {
+            subjectList = new ArrayList<>();
+            mSubjectMapper.put(tag, subjectList);
+        }
+
+        Subject<T, T> subject;
+        // PublishSubject只会把在订阅发生的时间点之后来自原始Observable的数据发射给观察者
+        subjectList.add(subject = PublishSubject.create());
+//        KLog.e("{register}subjectMapper: " + mSubjectMapper);
+        return subject;
     }
-    // 根据传递的 eventType 类型返回特定类型(eventType)的 被观察者
-    public <T> Observable<T> toObservable (Class<T> eventType) {
-        return bus.ofType(eventType);
-//        这里感谢小鄧子的提醒: ofType = filter + cast
-//        return bus.filter(new Func1<Object, Boolean>() {
-//            @Override
-//            public Boolean call(Object o) {
-//                return eventType.isInstance(o);
-//            }
-//        }) .cast(eventType);
+
+    /**
+     * 取消注册事件
+     *
+     * @param tag        标签
+     * @param observable 被观察者
+     */
+    public void unregister(@NonNull Object tag, @NonNull Observable observable) {
+        final List<Subject> subjectList = mSubjectMapper.get(tag);
+        if (null != subjectList) {
+            subjectList.remove(observable);
+            if (subjectList.isEmpty()) {
+                // 集合数据为0的时候移map除掉tag
+                mSubjectMapper.remove(tag);
+            }
+        }
+//        KLog.e("{unregister}subjectMapper: " + mSubjectMapper);
     }
+
+    /**
+     * 发送事件
+     *
+     * @param tag     标签
+     * @param content 发送的内容
+     */
+    @SuppressWarnings("unchecked")
+    public void post(@NonNull Object tag, @NonNull Object content) {
+        final List<Subject> subjectList = mSubjectMapper.get(tag);
+        if (null != subjectList && !subjectList.isEmpty()) {
+            for (Subject subject : subjectList) {
+                subject.onNext(content);
+            }
+        }
+    }
+
 }

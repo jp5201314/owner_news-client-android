@@ -1,4 +1,4 @@
-package cn.cnlinfo.news.fragment;
+package cn.cnlinfo.news.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;

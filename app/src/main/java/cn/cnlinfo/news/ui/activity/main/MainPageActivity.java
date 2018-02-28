@@ -1,4 +1,4 @@
-package cn.cnlinfo.news.ui.activity;
+package cn.cnlinfo.news.ui.activity.main;
 
 import android.Manifest;
 import android.content.Intent;
@@ -45,11 +45,12 @@ import cn.cnlinfo.news.R;
 import cn.cnlinfo.news.UserSharedPreference;
 import cn.cnlinfo.news.adapter.MainPageFragmentAdapter;
 import cn.cnlinfo.news.dialog.DialogCreater;
-import cn.cnlinfo.news.fragment.CCMallFragment;
-import cn.cnlinfo.news.fragment.CCUnionFragment;
-import cn.cnlinfo.news.fragment.GaugePanelFragment;
-import cn.cnlinfo.news.fragment.NewsListFragment;
-import cn.cnlinfo.news.fragment.TradingCenterFragment;
+import cn.cnlinfo.news.ui.fragment.CCMallFragment;
+import cn.cnlinfo.news.ui.fragment.CCUnionFragment;
+import cn.cnlinfo.news.ui.fragment.GaugePanelFragment;
+import cn.cnlinfo.news.ui.fragment.news.NewsFragment;
+import cn.cnlinfo.news.ui.fragment.TradingCenterFragment;
+import cn.cnlinfo.news.ui.activity.BaseActivity;
 import cn.cnlinfo.news.ui.activity.channel.ChannelActivity;
 import cn.cnlinfo.news.utils.RxHeadImageTool;
 import cn.cnlinfo.news.utils.RxPermissionsTool;
@@ -58,7 +59,7 @@ import cn.cnlinfo.news.utils.ToastTool;
 import cn.cnlinfo.news.view.StopScrollViewPager;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainPageActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener, ViewPager.OnPageChangeListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainPageActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener,ViewPager.OnPageChangeListener, NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.vp)
     StopScrollViewPager vp;
@@ -92,7 +93,7 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
         unbinder = ButterKnife.bind(this);
-        validLoadGuidePage();
+        validLoadGuidePage();//验证引导指导页
         //设置为false是停止滑动ViewPager切换Fragment
         vp.setStopScroll(true);
         initToolBar(toolbar,true,"新闻");
@@ -243,7 +244,7 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
 
     //将fragment放入到集合中
     private List<Fragment> getFragmentList() {
-        fragmentList.add(0, new NewsListFragment());
+        fragmentList.add(0, new NewsFragment());
         fragmentList.add(1, new GaugePanelFragment());
         fragmentList.add(2, new TradingCenterFragment());
         fragmentList.add(3, new CCMallFragment());

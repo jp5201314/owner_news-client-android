@@ -8,6 +8,7 @@ import android.os.Message;
 import com.jaredrummler.android.widget.AnimatedSvgView;
 
 import cn.cnlinfo.news.R;
+import cn.cnlinfo.news.ui.activity.main.MainPageActivity;
 import cn.cnlinfo.news.utils.SVG;
 
 /**

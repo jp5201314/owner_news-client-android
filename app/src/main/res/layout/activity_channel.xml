@@ -10,7 +10,7 @@ android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     android:background="@color/color_gray_d8d8d8"
-    tools:context="cn.cnlinfo.news.ui.activity.ChannelActivity">
+    tools:context="cn.cnlinfo.news.ui.activity.channel.ChannelActivity">
     <include layout="@layout/layout_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,14 +25,14 @@ android:fitsSystemWindows="true"
             style="@style/manage_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="我的栏目"/>
+            android:text="我的频道"/>
 
         <TextView
             style="@style/manage_sub_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="长按拖拽排序或左滑删除"/>
+            android:text="长按拖拽排序或点击删除"/>
     </LinearLayout>
 
     <!-- android:overScrollMode="never"就是不显示边界阴影效果 -->
@@ -52,7 +52,7 @@ android:fitsSystemWindows="true"
             style="@style/manage_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="更多栏目"/>
+            android:text="更多频道"/>
 
         <TextView
             style="@style/manage_sub_title"

@@ -2,13 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_layout_height"
+        android:background="@color/color_green_009688"
         app:tabIndicatorColor="@android:color/white"
+        app:tabTextColor="@color/color_white_ffffff"
         app:tabMode="scrollable" />
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"

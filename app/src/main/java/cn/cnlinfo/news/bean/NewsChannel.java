@@ -27,7 +27,7 @@ public class NewsChannel {
     @Property(nameInDb = "NEWS_CHANNEL_INDEX")
     @Unique
     private long newsChannelIndex;
-    private Boolean newsChannelFixed;
+    private boolean newsChannelFixed;
 
     public NewsChannel() {
     }
@@ -81,11 +81,11 @@ public class NewsChannel {
         this.newsChannelIndex = newsChannelIndex;
     }
 
-    public Boolean getNewsChannelFixed() {
+    public boolean getNewsChannelFixed() {
         return newsChannelFixed;
     }
 
-    public void setNewsChannelFixed(Boolean newsChannelFixed) {
+    public void setNewsChannelFixed(boolean newsChannelFixed) {
         this.newsChannelFixed = newsChannelFixed;
     }
 

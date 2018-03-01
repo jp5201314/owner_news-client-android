@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -13,6 +14,8 @@ import cn.cnlinfo.news.R;
 import cn.cnlinfo.news.bean.NewsChannel;
 import cn.cnlinfo.news.rx.rxbus.RxBus;
 import cn.cnlinfo.news.ui.fragment.BaseFragment;
+import cn.cnlinfo.news.ui.fragment.news.adapter.NewsChannelFragmentAdapter;
+import cn.cnlinfo.news.utils.ViewUtil;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -57,9 +60,58 @@ public class NewsFragment extends BaseFragment implements NewsContact.View {
       /*  for (NewsChannel newsChannel : newsChannels) {
             Logger.d(newsChannel.toString());
         }*/
+        List<NewsListFragment> newsListFragments = new ArrayList<>();
+        List<String> tabTitle = new ArrayList<>();
+        if (newsChannels!=null){
+            for (int i = 0; i < newsChannels.size(); i++) {
+                NewsChannel newsChannel = newsChannels.get(i);
+                tabTitle.add(newsChannel.getNewsChannelName());
+                newsListFragments.add(NewsListFragment.newInstace(newsChannel.getNewsChannelId(),newsChannel.getNewsChannelType(),newsChannel.getNewsChannelIndex()));
+            }
+            if (viewPager.getAdapter() == null) {
+                // 初始化ViewPager
+                NewsChannelFragmentAdapter adapter = new NewsChannelFragmentAdapter(getChildFragmentManager(),
+                        newsListFragments, tabTitle);
+                viewPager.setAdapter(adapter);
+            } else {
+                final NewsChannelFragmentAdapter adapter = (NewsChannelFragmentAdapter) viewPager.getAdapter();
+                adapter.updateFragments(newsListFragments, tabTitle);
+            }
+            viewPager.setCurrentItem(0, false);
+            tabLayout.setupWithViewPager(viewPager);
+            tabLayout.setScrollPosition(0, 0, true);
+            // 根据Tab的长度动态设置TabLayout的模式
+            ViewUtil.dynamicSetTabLayoutMode(tabLayout);
+            setOnTabSelectEvent(viewPager, tabLayout);
+        }else {
+            toast("数据异常");
+        }
 
     }
+    /**
+     * 用户已选择tab的情况再次点击该tab，列表返回顶部，需要在setupWithViewPager后设置比如监听会把覆盖
+     *
+     * @param viewPager
+     * @param tabLayout TabLayout
+     */
+    protected void setOnTabSelectEvent(final ViewPager viewPager, final TabLayout tabLayout) {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition(), true);
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                RxBus.get().post("enableRefreshLayoutOrScrollRecyclerView", tab.getPosition());
+            }
+        });
+    }
     @Override
     public void initRxBusEvent() {
         mChannelObservable = RxBus.get().register(CHANNELCHANGE, Boolean.class);

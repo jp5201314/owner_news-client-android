@@ -9,7 +9,7 @@
     <cn.cnlinfo.news.view.StopScrollViewPager
         android:id="@+id/vp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/bt_negative_button"

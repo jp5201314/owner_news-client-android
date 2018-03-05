@@ -22,6 +22,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import com.shizhefei.mvc.MVCHelper;
+
 import cc.cloudist.acplibrary.ACProgressFlower;
 import cn.cnlinfo.news.R;
 import cn.cnlinfo.news.UserSharedPreference;
@@ -33,6 +35,7 @@ import cn.cnlinfo.news.manager.AppManage;
 import cn.cnlinfo.news.manager.LifeCycleComponentManager;
 import cn.cnlinfo.news.manager.PhoneManager;
 import cn.cnlinfo.news.manager.SystemBarTintManager;
+import cn.cnlinfo.news.mvc.factory.MyLoadViewFactory;
 import cn.cnlinfo.news.receiver.NetworkConnectChangedReceiver;
 import cn.cnlinfo.news.ui.activity.login.LoginRegisterActivity;
 import cn.cnlinfo.news.view.RefreshHeaderView;
@@ -57,6 +60,7 @@ public class BaseActivity extends AppCompatActivity implements IComponentContain
         AppManage.getInstance().addActivity(this);
         receiver = new NetworkConnectChangedReceiver();
         registerNetworkConnectChangedReceiver();
+        MVCHelper.setLoadViewFractory(new MyLoadViewFactory());
     }
 
     private void registerNetworkConnectChangedReceiver() {

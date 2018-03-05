@@ -5,10 +5,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Administrator on 2018/1/9 0009.
+ * Created by JP on 2018/1/9 0009.
  */
 
-public class BaseObservableTransfer<T> implements Observable.Transformer<T, T> {
+public class BaseObservableTransfer<T> implements Observable.Transformer<T,T> {
 
 
     @Override

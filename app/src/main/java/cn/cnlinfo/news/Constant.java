@@ -10,6 +10,7 @@ public class Constant {
 
     private static final String REQUEST_HOST = "http://ccf.hrkji.com/RegUser.asmx/";
     private static final String REQUEST_HOST_FOR_TEST = "http://ccf.hrkji.com/RegUser.asmx/";
+    public static final String ERRORMESSAGE = "errormessage";
     public  static final String DB_NAME = "NewsChannelTable";
     public static final String APP_NAME = "";
     //新闻

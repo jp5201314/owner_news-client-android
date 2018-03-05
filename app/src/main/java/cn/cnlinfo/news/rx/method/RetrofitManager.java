@@ -8,12 +8,16 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import cn.bmob.v3.BmobUser;
+import cn.cnlinfo.news.API;
 import cn.cnlinfo.news.Constant;
 import cn.cnlinfo.news.OwnerNewsApplication;
 import cn.cnlinfo.news.rx.BaseObservableTransfer;
+import cn.cnlinfo.news.rx.entity.NeteastNewsSummary;
 import cn.cnlinfo.news.rx.net_inter.HttpService;
 import cn.cnlinfo.news.utils.NetUtil;
 import okhttp3.Cache;
@@ -28,8 +32,11 @@ import okio.BufferedSource;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * /**
@@ -55,7 +62,6 @@ public class RetrofitManager {
     private static final Cache cache = new Cache(new File(Constant.IMAGE_CACHE_DIR_PATH, "HttpCache"), 1024 * 1024 * 100);
     private static volatile OkHttpClient okHttpClient = null;
 
-
     /**
      * 1是新闻
      * 2是图片
@@ -64,7 +70,7 @@ public class RetrofitManager {
      * @param type
      */
     private RetrofitManager(int type) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constant.getHost(type)).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).addConverterFactory(GsonConverterFactory.create()).client(getInstance()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constant.getHost(type)).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).addConverterFactory(GsonConverterFactory.create()).client(getOkHttpClientInstance()).build();
         httpService = retrofit.create(HttpService.class);
     }
 
@@ -151,7 +157,7 @@ public class RetrofitManager {
     }
 
     //获取OkHttpClient实例对象
-    public OkHttpClient getInstance() {
+    public OkHttpClient getOkHttpClientInstance() {
         synchronized (RetrofitManager.class) {
             if (okHttpClient == null) {
                 //加入cache缓存和增加拦截器，打印输出拦截的包的数据
@@ -179,5 +185,24 @@ public class RetrofitManager {
         return BmobUser.loginByAccountObservable(BmobUser.class,userName,passWord).compose(new BaseObservableTransfer<BmobUser>()).subscribe(subscriber);
     }
 
+    /**
+     * 获取新闻列表操作
+     * @param subscriber  获取新闻列表的数据回调
+     * @param channelId   订阅的频道的ID
+     * @param channelType  订阅的频道类型
+     * @param startPage  开始的页面号  每次加载10条
+     * @return
+     */
+    public Subscription toLoadNeteastNewsSummaryListData(Subscriber<List<NeteastNewsSummary>> subscriber, final String channelId, String channelType, int startPage){
+        return httpService.getNewsList(channelType,channelId,startPage).compose(new BaseObservableTransfer<Map<String,List<NeteastNewsSummary>>>()).flatMap(new Func1<Map<String, List<NeteastNewsSummary>>, Observable<?>>() {
+            @Override
+            public Observable<?> call(Map<String, List<NeteastNewsSummary>> stringListMap) {
+                if (channelId.equals(API.HOUSE_ID)){
+                    return Observable.from(stringListMap.get("北京"));
+                }
+                return Observable.from(stringListMap.get(channelId));
+            }
+        }).subscribe((Action1<? super Object>) subscriber);
+    }
 
 }

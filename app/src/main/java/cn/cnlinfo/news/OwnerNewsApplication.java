@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 
@@ -12,8 +13,12 @@ import org.greenrobot.greendao.query.QueryBuilder;
 import cn.bmob.v3.Bmob;
 import cn.cnlinfo.news.bean.DaoMaster;
 import cn.cnlinfo.news.bean.DaoSession;
+import cn.cnlinfo.news.event.ErrorMessageEvent;
 import cn.cnlinfo.news.manager.ACache;
+import cn.cnlinfo.news.rx.rxbus.RxBus;
 import cn.cnlinfo.news.ui.activity.login.LoginRegisterActivity;
+import rx.Observable;
+import rx.functions.Action1;
 
 
 /**
@@ -25,6 +30,7 @@ public class OwnerNewsApplication extends Application {
     private static Context mContext;
     private static OwnerNewsApplication INSTANCE;
     private static DaoSession daoSession;
+    private static Observable<ErrorMessageEvent> messageEventObservable;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -49,8 +55,39 @@ public class OwnerNewsApplication extends Application {
         Bmob.initialize(this,"223ee327a16960d28bd66cf3207f38e2");
         //配置数据库
         setupDatabase();
+        initRxBusEvent();
     }
 
+    /**
+     * 初始化错误信息显示
+     */
+    private void initRxBusEvent() {
+        messageEventObservable = RxBus.get().register(Constant.ERRORMESSAGE,ErrorMessageEvent.class);
+        messageEventObservable.subscribe(new Action1<ErrorMessageEvent>() {
+            @Override
+            public void call(ErrorMessageEvent errorMessageEvent) {
+                int code = errorMessageEvent.getErrorCode();
+                String msg = errorMessageEvent.getMsg();
+                switch (code){
+                    case 500:
+                        toast("服务器正在维护，请稍后再试!!!");
+                        break;
+                    case -1:
+                        toast(msg);
+                        break;
+                    case -2:
+                        toast(msg);
+                        break;
+                    default:
+                        toast(msg);
+                        break;
+                }
+            }
+        });
+    }
+    private void toast(String msg){
+        Toast.makeText(mContext,msg,Toast.LENGTH_SHORT).show();
+    }
     private void setupDatabase() {
         // // 官方推荐将获取 DaoMaster 对象的方法放到 Application 层，这样将避免多次创建生成 Session 对象
         // 通过 DaoMaster 的内部类 DevOpenHelper，你可以得到一个便利的 SQLiteOpenHelper 对象。
@@ -77,6 +114,7 @@ public class OwnerNewsApplication extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
+        RxBus.get().unregister(Constant.ERRORMESSAGE,messageEventObservable);
     }
 
 
@@ -96,6 +134,7 @@ public class OwnerNewsApplication extends Application {
     }
 
     public static synchronized Context getContext(){return mContext;}
+
 
 
 }

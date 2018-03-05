@@ -5,7 +5,6 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Property;
-import org.greenrobot.greendao.annotation.Unique;
 
 /**
  * Created by Administrator on 2018/2/28 0028.
@@ -23,16 +22,15 @@ public class NewsChannel {
     @NotNull
     private String newsChannelType;
     private boolean newsChannelSelect;
-    @Id
     @Property(nameInDb = "NEWS_CHANNEL_INDEX")
-    @Unique
+    @Id
     private long newsChannelIndex;
     private boolean newsChannelFixed;
 
     public NewsChannel() {
     }
 
-    public NewsChannel(String newsChannelName, String newsChannelId, String newsChannelType, boolean newsChannelSelect, long newsChannelIndex, Boolean newsChannelFixed) {
+    public NewsChannel(String newsChannelName, String newsChannelId, String newsChannelType, boolean newsChannelSelect, long newsChannelIndex, boolean newsChannelFixed) {
         this.newsChannelName = newsChannelName;
         this.newsChannelId = newsChannelId;
         this.newsChannelType = newsChannelType;

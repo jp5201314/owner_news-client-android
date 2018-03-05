@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import cn.cnlinfo.news.bean.NewsChannel;
-import cn.cnlinfo.news.rx.rxbus.RxBus;
 import cn.cnlinfo.news.ui.activity.channel.model.INewsChannelInteractor;
 import cn.cnlinfo.news.ui.activity.channel.model.INewsChannelInteractorImpl;
 import cn.cnlinfo.news.ui.callback.RequestCallback;
@@ -17,8 +16,8 @@ public class ChannelPresenter implements ChannelContact.Presenter,RequestCallbac
 
     private ChannelContact.View view;
     private INewsChannelInteractor iNewsChannelInteractor;
-    private boolean mChannelChange;
-    private static final String CHANNELCHANGE = "channelChange";
+
+
     public ChannelPresenter(ChannelContact.View view){
         this.view = view;
         view.initRxBusEvent();
@@ -28,7 +27,6 @@ public class ChannelPresenter implements ChannelContact.Presenter,RequestCallbac
 
     @Override
     public void toAddOrRemoveChannel(String channelName, boolean isSelected) {
-        mChannelChange = true;
         iNewsChannelInteractor.channelDbOperate(this,channelName,isSelected);
     }
 
@@ -50,8 +48,6 @@ public class ChannelPresenter implements ChannelContact.Presenter,RequestCallbac
 
     @Override
     public void requestComplete() {
-        //更改完成后通知界面刷新
-        RxBus.get().post(CHANNELCHANGE,mChannelChange);
     }
 
     @Override

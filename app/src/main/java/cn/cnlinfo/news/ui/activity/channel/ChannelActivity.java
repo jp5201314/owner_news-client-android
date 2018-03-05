@@ -23,6 +23,7 @@ import cn.cnlinfo.news.ui.activity.channel.adapter.NewsChannelAdapter;
 import cn.cnlinfo.news.ui.callback.SimpleItemTouchHelperCallback;
 import cn.cnlinfo.news.utils.BaseSpacesItemDecoration;
 import cn.cnlinfo.news.utils.MeasureUtil;
+import rx.Observable;
 import rx.functions.Action1;
 
 /**
@@ -37,7 +38,11 @@ public class ChannelActivity extends BaseActivity implements ChannelContact.View
     RecyclerView rvUncheckedList;
     private Unbinder unbinder;
     private ChannelPresenter channelPresenter;
-
+    private   NewsChannelAdapter newsChannelAdapter1;
+    private   NewsChannelAdapter newsChannelAdapter2;
+    private static final String CHANNELCHANGE = "channelChange";
+    private boolean mChannelChange;
+    private Observable<AddOrDeleteChannelEvent> mAddOrDeleteChannelObservable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +50,8 @@ public class ChannelActivity extends BaseActivity implements ChannelContact.View
         unbinder = ButterKnife.bind(this);
         setStatusBarColor(R.color.color_green_009688);//设置状态栏颜色
         initToolBar(toolbar, true, "栏目管理");
+        initRecycleView(rvCheckedList);
+        initRecycleView(rvUncheckedList);
         channelPresenter = new ChannelPresenter(this);
     }
 
@@ -64,21 +71,17 @@ public class ChannelActivity extends BaseActivity implements ChannelContact.View
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //更改完成后通知界面刷新
+        //RxBus.get().post(CHANNELCHANGE,mChannelChange);
+        RxBus.get().unregister("AddOrDeleteChannel",mAddOrDeleteChannelObservable);
         unbinder.unbind();
     }
 
     @Override
     public void initTwoRecycleView(List<NewsChannel> selectedChannel, List<NewsChannel> unSelectedChannel) {
-        rvCheckedList.setLayoutManager(new GridLayoutManager(this,4,LinearLayout.VERTICAL ,false));
-        rvCheckedList.addItemDecoration(new BaseSpacesItemDecoration(MeasureUtil.dip2px(this,8)));
-        //给子项设置动画以及相应改变的动画时间
-        rvCheckedList.setItemAnimator(new DefaultItemAnimator());
-        rvCheckedList.getItemAnimator().setAddDuration(250);
-        rvCheckedList.getItemAnimator().setMoveDuration(250);
-        rvCheckedList.getItemAnimator().setChangeDuration(250);
-        rvCheckedList.getItemAnimator().setRemoveDuration(250);
-        final NewsChannelAdapter newsChannelAdapter1 = new NewsChannelAdapter(this,selectedChannel);
+        newsChannelAdapter1 = new NewsChannelAdapter(this,selectedChannel);
         rvCheckedList.setAdapter(newsChannelAdapter1);
+
         // 只有我的频道可以拖拽排序
         SimpleItemTouchHelperCallback callback1 = new SimpleItemTouchHelperCallback(newsChannelAdapter1);
         ItemTouchHelper itemTouchHelper1 = new ItemTouchHelper(callback1);
@@ -93,28 +96,42 @@ public class ChannelActivity extends BaseActivity implements ChannelContact.View
             }
         });
 
-
-        rvUncheckedList.setLayoutManager(new GridLayoutManager(this,4,LinearLayout.VERTICAL ,false));
-        rvUncheckedList.addItemDecoration(new BaseSpacesItemDecoration(MeasureUtil.dip2px(this,8)));
-        //给子项设置动画以及相应改变的动画时间
-        rvUncheckedList.setItemAnimator(new DefaultItemAnimator());
-        rvUncheckedList.getItemAnimator().setAddDuration(250);
-        rvUncheckedList.getItemAnimator().setMoveDuration(250);
-        rvUncheckedList.getItemAnimator().setChangeDuration(250);
-        rvUncheckedList.getItemAnimator().setRemoveDuration(250);
-        final NewsChannelAdapter newsChannelAdapter2 = new NewsChannelAdapter(this,unSelectedChannel);
+        newsChannelAdapter2 = new NewsChannelAdapter(this,unSelectedChannel);
         rvUncheckedList.setAdapter(newsChannelAdapter2);
+    }
 
-
+    /**
+     * 初始化RecyclerView的属性
+     * @param recyclerView
+     */
+    public void initRecycleView(RecyclerView recyclerView) {
+        recyclerView.setLayoutManager(new GridLayoutManager(this,4, LinearLayout.VERTICAL ,false));
+        recyclerView.addItemDecoration(new BaseSpacesItemDecoration(MeasureUtil.dip2px(this,8)));
+        //给子项设置动画以及相应改变的动画时间
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.getItemAnimator().setAddDuration(250);
+        recyclerView.getItemAnimator().setMoveDuration(250);
+        recyclerView.getItemAnimator().setChangeDuration(250);
+        recyclerView.getItemAnimator().setRemoveDuration(250);
     }
 
     //接收通知界面更新，增加频道还是删除频道
     @Override
     public void initRxBusEvent() {
-        RxBus.get().register("AddOrDeleteChannel", AddOrDeleteChannelEvent.class).subscribe(new Action1<AddOrDeleteChannelEvent>() {
+        mAddOrDeleteChannelObservable = RxBus.get().register("AddOrDeleteChannel", AddOrDeleteChannelEvent.class);
+        mAddOrDeleteChannelObservable.subscribe(new Action1<AddOrDeleteChannelEvent>() {
             @Override
             public void call(AddOrDeleteChannelEvent addOrDeleteChannelEvent) {
-             channelPresenter.toAddOrRemoveChannel(addOrDeleteChannelEvent.getChannelName(),addOrDeleteChannelEvent.isSelected());
+                channelPresenter.toAddOrRemoveChannel(addOrDeleteChannelEvent.getChannelName(),addOrDeleteChannelEvent.isSelected());
+               // mChannelChange = true;
+                if (addOrDeleteChannelEvent.isSelected()){
+                    //若是已选择则进行增加已订阅的  适配器1增加项目 适配器2删除增加项目的位置
+                   newsChannelAdapter1.addItem(newsChannelAdapter1.getItemCount(),newsChannelAdapter2.getData().get(addOrDeleteChannelEvent.getPosition()));
+                   newsChannelAdapter2.deleteItem(addOrDeleteChannelEvent.getPosition(),newsChannelAdapter2.getData().get(addOrDeleteChannelEvent.getPosition()));
+                }else {
+                    newsChannelAdapter2.addItem(newsChannelAdapter2.getItemCount(),newsChannelAdapter1.getData().get(addOrDeleteChannelEvent.getPosition()));
+                    newsChannelAdapter1.deleteItem(addOrDeleteChannelEvent.getPosition(),newsChannelAdapter1.getData().get(addOrDeleteChannelEvent.getPosition()));
+                }
             }
         });
     }

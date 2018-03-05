@@ -17,6 +17,8 @@ public class BaseFragment extends LazyFragment implements IFragment, IComponentC
     private boolean mFirstResume = true;
     private LifeCycleComponentManager mComponentContainer = new LifeCycleComponentManager();
     protected ACProgressFlower waitingDialog;
+
+
     @Override
     public void addComponent(ILifeCycleComponent component) {
         this.mComponentContainer.addComponent(component);

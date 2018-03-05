@@ -7,6 +7,16 @@ package cn.cnlinfo.news.event;
 public class AddOrDeleteChannelEvent {
     private String channelName;
     private boolean isSelected;
+    private int position;
+
+    public AddOrDeleteChannelEvent(String channelName, boolean isSelected, int position) {
+        this.channelName = channelName;
+        this.isSelected = isSelected;
+        this.position = position;
+    }
+
+    public AddOrDeleteChannelEvent() {
+    }
 
     public AddOrDeleteChannelEvent(String channelName, boolean isSelected) {
         this.channelName = channelName;
@@ -27,5 +37,13 @@ public class AddOrDeleteChannelEvent {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

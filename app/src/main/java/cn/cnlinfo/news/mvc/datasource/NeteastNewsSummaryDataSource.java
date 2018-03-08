@@ -13,7 +13,7 @@ import cn.cnlinfo.news.event.ErrorMessageEvent;
 import cn.cnlinfo.news.rx.entity.NeteastNewsSummary;
 import cn.cnlinfo.news.rx.method.RetrofitManager;
 import cn.cnlinfo.news.rx.rxbus.RxBus;
-import rx.Subscriber;
+import cn.cnlinfo.news.ui.callback.HandleRequestCallBack;
 
 /**
  * Created by Administrator on 2018/3/5 0005.
@@ -44,22 +44,34 @@ public class NeteastNewsSummaryDataSource implements IAsyncDataSource<List<Netea
     }
 
     private RequestHandle loadUserLeaveMessageRecordList(final ResponseSender<List<NeteastNewsSummary>> sender, final int page){
-        RetrofitManager.getInstance(HostType.NETEASE_NEWS_VIDEO).toLoadNeteastNewsSummaryListData(new Subscriber<List<NeteastNewsSummary>>() {
+        //Logger.d("loadUserLeaveMessageRecordList"+channelId+":"+channelType);
+
+        RetrofitManager.getInstance(HostType.NETEASE_NEWS_VIDEO).toLoadNeteastNewsSummaryListData(new HandleRequestCallBack<List<NeteastNewsSummary>>() {
             @Override
-            public void onCompleted() {
-               maxPage +=number;
+            public void requestDataStart() {
+
             }
 
             @Override
-            public void onError(Throwable e) {
-                RxBus.get().post(Constant.ERRORMESSAGE,new ErrorMessageEvent(e.getMessage()));
-            }
-
-            @Override
-            public void onNext(List<NeteastNewsSummary> neteastNewsSummaries) {
+            public void requestDataSuccess(List<NeteastNewsSummary> neteastNewsSummaries) {
+                Logger.d(neteastNewsSummaries.toString());
+                maxPage +=number;
+                Logger.d(maxPage);
                 sender.sendData(neteastNewsSummaries);
             }
+
+            @Override
+            public void requestDataFail(String msg) {
+                Logger.d(msg);
+                RxBus.get().post(Constant.ERRORMESSAGE,new ErrorMessageEvent(msg));
+            }
+
+            @Override
+            public void requestCompleted() {
+
+            }
         },channelId,channelType,page);
+        Logger.d("loadUserLeaveMessageRecordList"+channelId+":"+channelType);
         return new OkHttpRequestHandler();
     }
 

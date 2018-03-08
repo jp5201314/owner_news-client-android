@@ -18,7 +18,6 @@ import rx.Subscriber;
 
 public abstract class HandleRequestCallBack<T> extends Subscriber<T>{
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -62,6 +61,7 @@ public abstract class HandleRequestCallBack<T> extends Subscriber<T>{
 
     @Override
     public void onNext(T t) {
+        Logger.d("onNext");
         requestDataSuccess(t);
         requestCompleted();
     }

@@ -45,13 +45,13 @@ import cn.cnlinfo.news.R;
 import cn.cnlinfo.news.UserSharedPreference;
 import cn.cnlinfo.news.adapter.MainPageFragmentAdapter;
 import cn.cnlinfo.news.dialog.DialogCreater;
+import cn.cnlinfo.news.ui.activity.BaseActivity;
+import cn.cnlinfo.news.ui.activity.channel.ChannelActivity;
 import cn.cnlinfo.news.ui.fragment.CCMallFragment;
 import cn.cnlinfo.news.ui.fragment.CCUnionFragment;
 import cn.cnlinfo.news.ui.fragment.GaugePanelFragment;
-import cn.cnlinfo.news.ui.fragment.news.NewsFragment;
 import cn.cnlinfo.news.ui.fragment.TradingCenterFragment;
-import cn.cnlinfo.news.ui.activity.BaseActivity;
-import cn.cnlinfo.news.ui.activity.channel.ChannelActivity;
+import cn.cnlinfo.news.ui.fragment.news.NewsFragment;
 import cn.cnlinfo.news.utils.RxHeadImageTool;
 import cn.cnlinfo.news.utils.RxPermissionsTool;
 import cn.cnlinfo.news.utils.RxToast;
@@ -185,6 +185,7 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
                     if (data != null) {
                         Bitmap bitmap = null;
                         try {
+
                             bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData()));
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();

@@ -1,6 +1,9 @@
 package cn.cnlinfo.news.ui.fragment;
 
+import android.os.Bundle;
 import android.widget.Toast;
+
+import com.shizhefei.mvc.MVCHelper;
 
 import cc.cloudist.acplibrary.ACProgressFlower;
 import cn.cnlinfo.news.R;
@@ -9,6 +12,7 @@ import cn.cnlinfo.news.inter.IComponentContainer;
 import cn.cnlinfo.news.inter.IFragment;
 import cn.cnlinfo.news.inter.ILifeCycleComponent;
 import cn.cnlinfo.news.manager.LifeCycleComponentManager;
+import cn.cnlinfo.news.mvc.factory.MyLoadViewFactory;
 import cn.cnlinfo.news.view.RefreshHeaderView;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -18,6 +22,12 @@ public class BaseFragment extends LazyFragment implements IFragment, IComponentC
     private LifeCycleComponentManager mComponentContainer = new LifeCycleComponentManager();
     protected ACProgressFlower waitingDialog;
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        MVCHelper.setLoadViewFractory(new MyLoadViewFactory());
+    }
 
     @Override
     public void addComponent(ILifeCycleComponent component) {

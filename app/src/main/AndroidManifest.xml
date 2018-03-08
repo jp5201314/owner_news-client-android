@@ -47,9 +47,9 @@
         android:name=".OwnerNewsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/news"
+        android:label="@string/app_name"
         android:resizeableActivity="false"
         android:supportsRtl="true"
-        android:label="@string/app_name"
         android:theme="@style/ThemeWithWindowBackground">
 
         <!-- 主页 -->
@@ -102,12 +102,17 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <!--新闻栏目管理界面-->
-        <activity android:name=".ui.activity.channel.ChannelActivity"
-            android:screenOrientation="portrait"
+        <!-- 新闻栏目管理界面 -->
+        <activity
+            android:name=".ui.activity.channel.ChannelActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--新闻详情界面-->
+        <activity android:name=".ui.activity.news_detail.NeteastNewsDetailActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 
 </manifest>

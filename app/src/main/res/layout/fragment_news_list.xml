@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <in.srain.cube.views.ptr.PtrClassicFrameLayout
         xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/rotate_header_list_view_frame"
@@ -22,8 +23,8 @@
             android:divider="@null"
             android:fadingEdge="none"
             android:listSelector="@android:color/transparent"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
             android:scrollbarStyle="outsideOverlay" />
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 </LinearLayout>

@@ -19,6 +19,7 @@ import cn.cnlinfo.news.OwnerNewsApplication;
 import cn.cnlinfo.news.rx.BaseObservableTransfer;
 import cn.cnlinfo.news.rx.entity.NeteastNewsSummary;
 import cn.cnlinfo.news.rx.net_inter.HttpService;
+import cn.cnlinfo.news.ui.callback.HandleRequestCallBack;
 import cn.cnlinfo.news.utils.NetUtil;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -35,7 +36,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
-import rx.functions.Action1;
 import rx.functions.Func1;
 
 /**
@@ -65,12 +65,13 @@ public class RetrofitManager {
     /**
      * 1是新闻
      * 2是图片
-     * 3是视频
+     * 是视频
      *
      * @param type
      */
     private RetrofitManager(int type) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constant.getHost(type)).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).addConverterFactory(GsonConverterFactory.create()).client(getOkHttpClientInstance()).build();
+        Logger.d(API.getHost(type));
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(API.getHost(type)).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).addConverterFactory(GsonConverterFactory.create()).client(getOkHttpClientInstance()).build();
         httpService = retrofit.create(HttpService.class);
     }
 
@@ -193,16 +194,22 @@ public class RetrofitManager {
      * @param startPage  开始的页面号  每次加载10条
      * @return
      */
-    public Subscription toLoadNeteastNewsSummaryListData(Subscriber<List<NeteastNewsSummary>> subscriber, final String channelId, String channelType, int startPage){
-        return httpService.getNewsList(channelType,channelId,startPage).compose(new BaseObservableTransfer<Map<String,List<NeteastNewsSummary>>>()).flatMap(new Func1<Map<String, List<NeteastNewsSummary>>, Observable<?>>() {
+    public Subscription toLoadNeteastNewsSummaryListData(HandleRequestCallBack<List<NeteastNewsSummary>> subscriber, final String channelId, final String channelType, int startPage){
+        //Logger.e("新闻列表：" + channelType + ";" + channelId+":"+startPage);
+
+        return  httpService.getNewsList(channelType,channelId,startPage).compose(new BaseObservableTransfer<Map<String,List<NeteastNewsSummary>>>()).flatMap(new Func1<Map<String, List<NeteastNewsSummary>>, Observable<?>>() {
             @Override
             public Observable<?> call(Map<String, List<NeteastNewsSummary>> stringListMap) {
                 if (channelId.equals(API.HOUSE_ID)){
-                    return Observable.from(stringListMap.get("北京"));
+                    return Observable.just(stringListMap.get("北京"));
                 }
-                return Observable.from(stringListMap.get(channelId));
+               /* for (NeteastNewsSummary neteastNewsSummary : stringListMap.get(channelId)) {
+                    Logger.e(neteastNewsSummary.toString());
+                }*/
+                //just是将List直接返回   from是将List中的每一项直接返回
+                return Observable.just(stringListMap.get(channelId));
             }
-        }).subscribe((Action1<? super Object>) subscriber);
+        }).subscribe((HandleRequestCallBack)subscriber);
     }
 
 }

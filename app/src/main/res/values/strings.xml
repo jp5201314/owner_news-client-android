@@ -111,4 +111,12 @@
         <item>T1348649475931</item>
         <item>T1371543208049</item>
     </string-array>
+
+    <string name="news_detail">新闻详情</string>
+    <string name="from">来源: %1$s  %2$s</string>
+    <string name="title_activity_news_channel_manage">NewsChannelManageActivity</string>
+    <string name="news_channel_manage">频道管理</string>
+    <string name="photo_detail">图片新闻</string>
+    <string name="photo_page">%1$d/%2$d</string>
+    <string name="photo_detail_content">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;%1$s</string>
 </resources>

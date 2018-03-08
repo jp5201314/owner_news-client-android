@@ -60,7 +60,6 @@ public class BaseActivity extends AppCompatActivity implements IComponentContain
         AppManage.getInstance().addActivity(this);
         receiver = new NetworkConnectChangedReceiver();
         registerNetworkConnectChangedReceiver();
-        MVCHelper.setLoadViewFractory(new MyLoadViewFactory());
     }
 
     private void registerNetworkConnectChangedReceiver() {

@@ -80,6 +80,7 @@ public class NewsFragment extends BaseFragment implements NewsContact.View {
             for (int i = 0; i < newsChannels.size(); i++) {
                 NewsChannel newsChannel = newsChannels.get(i);
                 tabTitle.add(newsChannel.getNewsChannelName());
+                Logger.d(newsChannel.getNewsChannelId()+":::"+newsChannel.getNewsChannelType());
                 newsListFragments.add(NewsListFragment.newInstace(newsChannel.getNewsChannelId(),newsChannel.getNewsChannelType(),newsChannel.getNewsChannelIndex()));
             }
             if (viewPager.getAdapter() == null) {
@@ -92,6 +93,7 @@ public class NewsFragment extends BaseFragment implements NewsContact.View {
                 adapter.updateFragments(newsListFragments, tabTitle);
             }
             viewPager.setCurrentItem(0, false);
+            viewPager.setOffscreenPageLimit(4);//懒加载，需要缓存tab两边的fragment
             tabLayout.setupWithViewPager(viewPager);
             tabLayout.setScrollPosition(0, 0, true);
             // 根据Tab的长度动态设置TabLayout的模式
@@ -122,6 +124,7 @@ public class NewsFragment extends BaseFragment implements NewsContact.View {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+                Logger.d(tab.getPosition());
                 RxBus.get().post("enableRefreshLayoutOrScrollRecyclerView", tab.getPosition());
             }
         });

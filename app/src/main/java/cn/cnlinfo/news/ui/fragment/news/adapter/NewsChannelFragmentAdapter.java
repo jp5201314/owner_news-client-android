@@ -11,6 +11,7 @@ import cn.cnlinfo.news.ui.fragment.news.NewsListFragment;
 
 /**
  * Created by Administrator on 2018/3/1 0001.
+ * 新闻频道适配器
  */
 
 public class NewsChannelFragmentAdapter extends FragmentStatePagerAdapter {

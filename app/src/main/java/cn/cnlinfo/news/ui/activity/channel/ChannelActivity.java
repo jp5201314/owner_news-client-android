@@ -6,7 +6,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import java.util.List;
@@ -50,23 +49,12 @@ public class ChannelActivity extends BaseActivity implements ChannelContact.View
         unbinder = ButterKnife.bind(this);
         setStatusBarColor(R.color.color_green_009688);//设置状态栏颜色
         initToolBar(toolbar, true, "栏目管理");
+        toolbar.setBackgroundColor(getResources().getColor(R.color.color_green_009688));
         initRecycleView(rvCheckedList);
         initRecycleView(rvUncheckedList);
         channelPresenter = new ChannelPresenter(this);
     }
 
-
-
-    //点击toolbar上的返回按钮结束当前activity
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==android.R.id.home){
-            finish();
-            overridePendingTransition(R.anim.fade_entry,R.anim.fade_exit);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onDestroy() {

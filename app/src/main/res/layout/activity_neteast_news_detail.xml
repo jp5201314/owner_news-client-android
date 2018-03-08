@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/itemBackground"
-    android:fitsSystemWindows="true"
+    android:background="@color/color_gray_d8d8d8"
     tools:context=".ui.activity.news_detail.NeteastNewsDetailActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -46,7 +45,7 @@
                 android:transitionName="photos"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7"
-                tools:src="@drawable/ic_header"/>
+                android:src="@drawable/ic_header"/>
 
             <!--layout_collapseMode (折叠模式) - 有两个值:
             pin -  设置为这个模式时，当CollapsingToolbarLayout完全收缩后，Toolbar还可以保留在屏幕上。
@@ -60,7 +59,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:theme="@style/ToolbarTheme"/>
+                app:theme="@style/ToolbarTheme" />
 
             <!--使用CollapsingToolbarLayout时必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上不会显示。即：
             mCollapsingToolbarLayout.setTitle(" ");

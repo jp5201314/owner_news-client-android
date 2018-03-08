@@ -12,6 +12,7 @@ import cn.cnlinfo.news.rx.entity.SinaPhotoList;
 import cn.cnlinfo.news.rx.entity.WeatherInfo;
 import cn.cnlinfo.news.rx.response.entity.DataEntity;
 import cn.cnlinfo.news.rx.response.entity.HttpResult;
+import cn.cnlinfo.news.rx.response.entity.ResponseData;
 import cn.cnlinfo.news.rx.response.entity.User;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -73,7 +74,8 @@ public interface HttpService {
             @Query("oldchwm") String oldchwm,
             @Query("imei") String imei, @Query("uid") String uid, @Query("p") int page);
 
-
+    @GET("data/福利/20/{startPage}")
+    Observable<ResponseData> getSinaPhotoDetail(@Path("startPage") int startPage);
     /**
      * 新浪图片详情 例子：http://api.sina.cn/sinago/article.json?postt=hdpic_hdpic_toutiao_4&wm=b207&from=6042095012&chwm=12050_0001&oldchwm=12050_0001&imei=867064013906290&uid=802909da86d9f5fc&id=20550-66955-hdpic
      *

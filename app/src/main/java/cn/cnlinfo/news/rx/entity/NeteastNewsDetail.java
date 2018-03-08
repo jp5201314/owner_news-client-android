@@ -248,4 +248,245 @@ public class NeteastNewsDetail {
         public String ptime;
         public String href;
     }
+
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public int getReplyCount() {
+        return replyCount;
+    }
+
+    public void setReplyCount(int replyCount) {
+        this.replyCount = replyCount;
+    }
+
+    public String getDigest() {
+        return digest;
+    }
+
+    public void setDigest(String digest) {
+        this.digest = digest;
+    }
+
+    public String getDkeys() {
+        return dkeys;
+    }
+
+    public void setDkeys(String dkeys) {
+        this.dkeys = dkeys;
+    }
+
+    public String getEc() {
+        return ec;
+    }
+
+    public void setEc(String ec) {
+        this.ec = ec;
+    }
+
+    public String getDocid() {
+        return docid;
+    }
+
+    public void setDocid(String docid) {
+        this.docid = docid;
+    }
+
+    public SourceinfoEntity getSourceinfo() {
+        return sourceinfo;
+    }
+
+    public void setSourceinfo(SourceinfoEntity sourceinfo) {
+        this.sourceinfo = sourceinfo;
+    }
+
+    public boolean isPicnews() {
+        return picnews;
+    }
+
+    public void setPicnews(boolean picnews) {
+        this.picnews = picnews;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTid() {
+        return tid;
+    }
+
+    public void setTid(String tid) {
+        this.tid = tid;
+    }
+
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
+    }
+
+    public int getThreadVote() {
+        return threadVote;
+    }
+
+    public void setThreadVote(int threadVote) {
+        this.threadVote = threadVote;
+    }
+
+    public int getThreadAgainst() {
+        return threadAgainst;
+    }
+
+    public void setThreadAgainst(int threadAgainst) {
+        this.threadAgainst = threadAgainst;
+    }
+
+    public String getReplyBoard() {
+        return replyBoard;
+    }
+
+    public void setReplyBoard(String replyBoard) {
+        this.replyBoard = replyBoard;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getVoicecomment() {
+        return voicecomment;
+    }
+
+    public void setVoicecomment(String voicecomment) {
+        this.voicecomment = voicecomment;
+    }
+
+    public boolean isHasNext() {
+        return hasNext;
+    }
+
+    public void setHasNext(boolean hasNext) {
+        this.hasNext = hasNext;
+    }
+
+    public String getPtime() {
+        return ptime;
+    }
+
+    public void setPtime(String ptime) {
+        this.ptime = ptime;
+    }
+
+    public List<?> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<?> users) {
+        this.users = users;
+    }
+
+    public List<?> getYdbaike() {
+        return ydbaike;
+    }
+
+    public void setYdbaike(List<?> ydbaike) {
+        this.ydbaike = ydbaike;
+    }
+
+    public List<?> getLink() {
+        return link;
+    }
+
+    public void setLink(List<?> link) {
+        this.link = link;
+    }
+
+    public List<?> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<?> votes) {
+        this.votes = votes;
+    }
+
+    public List<ImgEntity> getImg() {
+        return img;
+    }
+
+    public void setImg(List<ImgEntity> img) {
+        this.img = img;
+    }
+
+    public List<TopiclistNewsEntity> getTopiclistNews() {
+        return topiclistNews;
+    }
+
+    public void setTopiclistNews(List<TopiclistNewsEntity> topiclistNews) {
+        this.topiclistNews = topiclistNews;
+    }
+
+    public List<TopiclistEntity> getTopiclist() {
+        return topiclist;
+    }
+
+    public void setTopiclist(List<TopiclistEntity> topiclist) {
+        this.topiclist = topiclist;
+    }
+
+    public List<KeywordSearchEntity> getKeywordSearch() {
+        return keywordSearch;
+    }
+
+    public void setKeywordSearch(List<KeywordSearchEntity> keywordSearch) {
+        this.keywordSearch = keywordSearch;
+    }
+
+    public List<VideoEntity> getVideo() {
+        return video;
+    }
+
+    public void setVideo(List<VideoEntity> video) {
+        this.video = video;
+    }
+
+    public List<?> getBoboList() {
+        return boboList;
+    }
+
+    public void setBoboList(List<?> boboList) {
+        this.boboList = boboList;
+    }
+
+    public List<RelativeSysEntity> getRelativeSys() {
+        return relativeSys;
+    }
+
+    public void setRelativeSys(List<RelativeSysEntity> relativeSys) {
+        this.relativeSys = relativeSys;
+    }
+
+    public List<?> getApps() {
+        return apps;
+    }
+
+    public void setApps(List<?> apps) {
+        this.apps = apps;
+    }
 }

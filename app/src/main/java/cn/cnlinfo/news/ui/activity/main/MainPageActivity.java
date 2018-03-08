@@ -49,7 +49,7 @@ import cn.cnlinfo.news.ui.activity.BaseActivity;
 import cn.cnlinfo.news.ui.activity.channel.ChannelActivity;
 import cn.cnlinfo.news.ui.fragment.CCMallFragment;
 import cn.cnlinfo.news.ui.fragment.CCUnionFragment;
-import cn.cnlinfo.news.ui.fragment.GaugePanelFragment;
+import cn.cnlinfo.news.ui.fragment.image.ImageFragment;
 import cn.cnlinfo.news.ui.fragment.TradingCenterFragment;
 import cn.cnlinfo.news.ui.fragment.news.NewsFragment;
 import cn.cnlinfo.news.utils.RxHeadImageTool;
@@ -97,6 +97,7 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
         //设置为false是停止滑动ViewPager切换Fragment
         vp.setStopScroll(true);
         initToolBar(toolbar,true,"新闻");
+        toolbar.setBackgroundColor(getResources().getColor(R.color.color_green_009688));
         setStatusBarColor(R.color.color_green_009688);//设置状态栏颜色
         init();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -246,7 +247,7 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
     //将fragment放入到集合中
     private List<Fragment> getFragmentList() {
         fragmentList.add(0, new NewsFragment());
-        fragmentList.add(1, new GaugePanelFragment());
+        fragmentList.add(1, new ImageFragment());
         fragmentList.add(2, new TradingCenterFragment());
         fragmentList.add(3, new CCMallFragment());
         fragmentList.add(4, new CCUnionFragment());

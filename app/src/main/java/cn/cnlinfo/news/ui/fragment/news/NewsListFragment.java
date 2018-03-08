@@ -128,6 +128,7 @@ public class NewsListFragment extends BaseFragment implements BaseRecyclerAdapte
         Logger.d(position);
         Intent intent = new Intent(getActivity(), NeteastNewsDetailActivity.class);
         intent.putExtra("postId",entity.getPostid());
+        intent.putExtra("imgSrc",entity.getImgsrc());
         getActivity().startActivity(intent);
         getActivity().overridePendingTransition(R.anim.fade_entry,R.anim.fade_exit);
     }

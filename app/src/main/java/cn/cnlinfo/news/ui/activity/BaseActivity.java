@@ -16,13 +16,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
-
-import com.shizhefei.mvc.MVCHelper;
 
 import cc.cloudist.acplibrary.ACProgressFlower;
 import cn.cnlinfo.news.R;
@@ -35,7 +34,6 @@ import cn.cnlinfo.news.manager.AppManage;
 import cn.cnlinfo.news.manager.LifeCycleComponentManager;
 import cn.cnlinfo.news.manager.PhoneManager;
 import cn.cnlinfo.news.manager.SystemBarTintManager;
-import cn.cnlinfo.news.mvc.factory.MyLoadViewFactory;
 import cn.cnlinfo.news.receiver.NetworkConnectChangedReceiver;
 import cn.cnlinfo.news.ui.activity.login.LoginRegisterActivity;
 import cn.cnlinfo.news.view.RefreshHeaderView;
@@ -61,7 +59,16 @@ public class BaseActivity extends AppCompatActivity implements IComponentContain
         receiver = new NetworkConnectChangedReceiver();
         registerNetworkConnectChangedReceiver();
     }
-
+    //点击toolbar上的返回按钮结束当前activity
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            finish();
+            overridePendingTransition(R.anim.fade_entry,R.anim.fade_exit);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void registerNetworkConnectChangedReceiver() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -106,7 +113,7 @@ public class BaseActivity extends AppCompatActivity implements IComponentContain
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.color_green_009688));//设置Toolbar的背景颜色
+        //toolbar.setBackgroundColor(getResources().getColor(R.color.color_green_009688));//设置Toolbar的背景颜色
         getSupportActionBar().setDisplayHomeAsUpEnabled(homeAsUpEnabled);//给左上角图标的左边加上一个返回的图标并且可以点击
         getSupportActionBar().setHomeButtonEnabled(true);//setHomeButtonEnabled这个小于4.0版本的默认值为true的。但是在4.0及其以上是false，该方法的作用：决定左上角的图标是否可以点击。没有向左的小图标。 true 图标可以点击  false 不可以点击。
     }

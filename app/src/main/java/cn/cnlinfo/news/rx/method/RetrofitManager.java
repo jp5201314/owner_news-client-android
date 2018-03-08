@@ -17,8 +17,11 @@ import cn.cnlinfo.news.API;
 import cn.cnlinfo.news.Constant;
 import cn.cnlinfo.news.OwnerNewsApplication;
 import cn.cnlinfo.news.rx.BaseObservableTransfer;
+import cn.cnlinfo.news.rx.entity.NeteastNewsDetail;
 import cn.cnlinfo.news.rx.entity.NeteastNewsSummary;
+import cn.cnlinfo.news.rx.entity.SinaPhotoDetail;
 import cn.cnlinfo.news.rx.net_inter.HttpService;
+import cn.cnlinfo.news.rx.response.entity.ResponseData;
 import cn.cnlinfo.news.ui.callback.HandleRequestCallBack;
 import cn.cnlinfo.news.utils.NetUtil;
 import okhttp3.Cache;
@@ -210,6 +213,31 @@ public class RetrofitManager {
                 return Observable.just(stringListMap.get(channelId));
             }
         }).subscribe((HandleRequestCallBack)subscriber);
+    }
+
+    /**
+     * 获取新闻详细信息
+     * @param requestCallBack  获取新闻详细信息的数据回调
+     * @param postId  新闻列表项的详细信息id
+     * @return
+     */
+    public Subscription toGainNeteastNewsDatailData(HandleRequestCallBack<NeteastNewsDetail> requestCallBack,final String postId){
+        return httpService.getNewsDetail(postId).compose(new BaseObservableTransfer<Map<String,NeteastNewsDetail>>()).flatMap(new Func1<Map<String, NeteastNewsDetail>, Observable<?>>() {
+            @Override
+            public Observable<?> call(Map<String, NeteastNewsDetail> stringNeteastNewsDetailMap) {
+                NeteastNewsDetail neteastNewsDetail = stringNeteastNewsDetailMap.get(postId);
+                return Observable.just(neteastNewsDetail);
+            }
+        }).subscribe((HandleRequestCallBack)requestCallBack);
+    }
+
+    public Subscription toLoadImageListData(HandleRequestCallBack<List<SinaPhotoDetail>> requestCallBack,final  int startPage){
+        return httpService.getSinaPhotoDetail(startPage).compose(new BaseObservableTransfer<ResponseData>()).flatMap(new Func1<ResponseData, Observable<?>>() {
+            @Override
+            public Observable<?> call(ResponseData responseData) {
+                return Observable.just(responseData.getResults());
+            }
+        }).subscribe((HandleRequestCallBack)requestCallBack);
     }
 
 }

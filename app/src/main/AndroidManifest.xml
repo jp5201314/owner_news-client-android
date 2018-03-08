@@ -112,7 +112,7 @@
         <activity android:name=".ui.activity.news_detail.NeteastNewsDetailActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

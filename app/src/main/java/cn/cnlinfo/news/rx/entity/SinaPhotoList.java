@@ -5,4 +5,5 @@ package cn.cnlinfo.news.rx.entity;
  */
 
 public class SinaPhotoList {
+
 }

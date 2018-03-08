@@ -130,6 +130,11 @@ public class API {
      */
     public static final String SINA_PHOTO_HOST = "http://api.sina.cn/sinago/";
 
+    /**
+     * 美女福利
+     */
+    public static final String SINA_IMAGE_HOST = "http://gank.io/api/";
+
     // 精选列表
     public static final String SINA_PHOTO_CHOICE_ID = "hdpic_toutiao";
     // 趣图列表
@@ -174,7 +179,7 @@ public class API {
             case HostType.WEATHER_INFO:
                 return API.WEATHER_HOST;
         }
-        return "";
+        return API.SINA_IMAGE_HOST;
     }
 
 }

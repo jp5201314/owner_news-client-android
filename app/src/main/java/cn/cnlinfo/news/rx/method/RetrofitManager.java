@@ -19,6 +19,7 @@ import cn.cnlinfo.news.OwnerNewsApplication;
 import cn.cnlinfo.news.rx.BaseObservableTransfer;
 import cn.cnlinfo.news.rx.entity.NeteastNewsDetail;
 import cn.cnlinfo.news.rx.entity.NeteastNewsSummary;
+import cn.cnlinfo.news.rx.entity.NeteastVideoSummary;
 import cn.cnlinfo.news.rx.entity.SinaPhotoDetail;
 import cn.cnlinfo.news.rx.net_inter.HttpService;
 import cn.cnlinfo.news.rx.response.entity.ResponseData;
@@ -231,6 +232,12 @@ public class RetrofitManager {
         }).subscribe((HandleRequestCallBack)requestCallBack);
     }
 
+    /**
+     * 获取图片数据信息
+     * @param requestCallBack  获取图片详细信息的数据回调
+     * @param startPage  图片的起始页面0 1 2 3
+     * @return
+     */
     public Subscription toLoadImageListData(HandleRequestCallBack<List<SinaPhotoDetail>> requestCallBack,final  int startPage){
         return httpService.getSinaPhotoDetail(startPage).compose(new BaseObservableTransfer<ResponseData>()).flatMap(new Func1<ResponseData, Observable<?>>() {
             @Override
@@ -240,4 +247,19 @@ public class RetrofitManager {
         }).subscribe((HandleRequestCallBack)requestCallBack);
     }
 
+    /**
+     * 获取视屏的列表
+     * @param requestCallBack 获取视频详细信息的数据回调
+     * @param videoId  视屏的id值
+     * @param startPage  视屏列表加载的起始页面
+     * @return
+     */
+    public Subscription toLoadVideoListData(HandleRequestCallBack<List<NeteastVideoSummary>> requestCallBack, final String videoId, int startPage){
+        return httpService.getVideoList(videoId,startPage).compose(new BaseObservableTransfer<Map<String,List<NeteastVideoSummary>>>()).flatMap(new Func1<Map<String, List<NeteastVideoSummary>>, Observable<?>>() {
+            @Override
+            public Observable<?> call(Map<String, List<NeteastVideoSummary>> stringListMap) {
+                return Observable.just(stringListMap.get(videoId));
+            }
+        }).subscribe((HandleRequestCallBack)requestCallBack);
+    }
 }

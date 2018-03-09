@@ -50,8 +50,8 @@ import cn.cnlinfo.news.ui.activity.channel.ChannelActivity;
 import cn.cnlinfo.news.ui.fragment.CCMallFragment;
 import cn.cnlinfo.news.ui.fragment.CCUnionFragment;
 import cn.cnlinfo.news.ui.fragment.image.ImageFragment;
-import cn.cnlinfo.news.ui.fragment.TradingCenterFragment;
 import cn.cnlinfo.news.ui.fragment.news.NewsFragment;
+import cn.cnlinfo.news.ui.fragment.video.VideoFragment;
 import cn.cnlinfo.news.utils.RxHeadImageTool;
 import cn.cnlinfo.news.utils.RxPermissionsTool;
 import cn.cnlinfo.news.utils.RxToast;
@@ -248,7 +248,7 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
     private List<Fragment> getFragmentList() {
         fragmentList.add(0, new NewsFragment());
         fragmentList.add(1, new ImageFragment());
-        fragmentList.add(2, new TradingCenterFragment());
+        fragmentList.add(2, new VideoFragment());
         fragmentList.add(3, new CCMallFragment());
         fragmentList.add(4, new CCUnionFragment());
         return fragmentList;

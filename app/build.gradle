@@ -89,6 +89,7 @@ android {
 
     buildTypes {
         debug {
+            multiDexEnabled true
             minifyEnabled false
             zipAlignEnabled false
             shrinkResources false
@@ -256,5 +257,9 @@ dependencies {
      * RichText  富文本
      */
     compile 'zhou.widget:richtext:1.0.4'
+
+    /**
+     * ijkplayer
+     */
 
 }

@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.orhanobut.logger.Logger;
 import com.shizhefei.mvc.MVCHelper;
@@ -50,7 +53,7 @@ public class NewsListFragment extends BaseFragment implements BaseRecyclerAdapte
     private NeteastNewsSummaryListAdapter adapter;
     private Observable<Integer> refreshData;
 
-    public static NewsListFragment newInstace(String channelId, String channelType, long channelIndex) {
+    public static NewsListFragment newInstance(String channelId, String channelType, long channelIndex) {
         NewsListFragment newsListFragment = new NewsListFragment();
         Bundle bundle = new Bundle();
         bundle.putString(CHANNELIDKEY, channelId);
@@ -67,7 +70,7 @@ public class NewsListFragment extends BaseFragment implements BaseRecyclerAdapte
             channel_id = getArguments().getString(CHANNELIDKEY);
             channel_type = getArguments().getString(CHANNELTYPEKEY);
             channel_index = getArguments().getLong(CHANNELINDEXKEY);
-            Logger.d(channel_index);
+//            Logger.d(channel_index);
         }
         //注册tag刷新事件
         initRefreshData();
@@ -85,13 +88,12 @@ public class NewsListFragment extends BaseFragment implements BaseRecyclerAdapte
         });
     }
 
-
     @Override
-    protected void onCreateViewLazy(Bundle savedInstanceState) {
-        super.onCreateViewLazy(savedInstanceState);
-        setContentView(R.layout.fragment_news_list);
-        unbinder = ButterKnife.bind(this,getContentView());
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_news_list,container,false);
+        unbinder = ButterKnife.bind(this,view);
         setNewsListData();
+        return view;
     }
 
     private void setNewsListData(){
@@ -112,14 +114,9 @@ public class NewsListFragment extends BaseFragment implements BaseRecyclerAdapte
 
 
     @Override
-    protected void onDestroyViewLazy() {
-        super.onDestroyViewLazy();
-        unbinder.unbind();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
+        unbinder.unbind();
         RxBus.get().unregister("enableRefreshLayoutOrScrollRecyclerView",refreshData);
     }
 

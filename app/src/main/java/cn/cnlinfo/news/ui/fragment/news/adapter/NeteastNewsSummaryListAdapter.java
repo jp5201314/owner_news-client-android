@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +39,7 @@ public class NeteastNewsSummaryListAdapter extends BaseRecyclerAdapter<NeteastNe
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder){
-            Logger.d(list.toString());
+//            Logger.d(list.toString());
             if (list!=null&&list.size()>0){
                 NeteastNewsSummary neteastNewsSummary = list.get(position);
                 if (neteastNewsSummary!=null){

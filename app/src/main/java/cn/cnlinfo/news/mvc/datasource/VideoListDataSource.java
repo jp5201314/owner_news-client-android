@@ -9,6 +9,7 @@ import java.util.List;
 
 import cn.cnlinfo.news.Constant;
 import cn.cnlinfo.news.HostType;
+import cn.cnlinfo.news.event.ErrorMessageEvent;
 import cn.cnlinfo.news.rx.entity.NeteastVideoSummary;
 import cn.cnlinfo.news.rx.method.RetrofitManager;
 import cn.cnlinfo.news.rx.rxbus.RxBus;
@@ -36,8 +37,8 @@ public class VideoListDataSource implements IAsyncDataSource<List<NeteastVideoSu
         return loadImageList(sender,page);
     }
 
-    private RequestHandle loadImageList(final ResponseSender<List<NeteastVideoSummary>> sender, int page){
-        RetrofitManager.getInstance(HostType.NETEASE_NEWS_VIDEO).toLoadVideoListData(new HandleRequestCallBack<List<NeteastVideoSummary>>() {
+    private RequestHandle loadImageList(final ResponseSender<List<NeteastVideoSummary>> sender,final int page){
+        RetrofitManager.getInstance(HostType.NETEASE_VEDIO).toLoadVideoListData(new HandleRequestCallBack<List<NeteastVideoSummary>>() {
             @Override
             public void requestDataStart() {
 
@@ -51,7 +52,7 @@ public class VideoListDataSource implements IAsyncDataSource<List<NeteastVideoSu
 
             @Override
             public void requestDataFail(String msg) {
-                RxBus.get().post(Constant.ERRORMESSAGE,msg);
+                RxBus.get().post(Constant.ERRORMESSAGE,new ErrorMessageEvent(msg));
             }
 
             @Override

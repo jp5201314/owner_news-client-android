@@ -74,7 +74,6 @@ public class RetrofitManager {
      * @param type
      */
     private RetrofitManager(int type) {
-        Logger.d(API.getHost(type));
         Retrofit retrofit = new Retrofit.Builder().baseUrl(API.getHost(type)).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).addConverterFactory(GsonConverterFactory.create()).client(getOkHttpClientInstance()).build();
         httpService = retrofit.create(HttpService.class);
     }
@@ -254,7 +253,7 @@ public class RetrofitManager {
      * @param startPage  视屏列表加载的起始页面
      * @return
      */
-    public Subscription toLoadVideoListData(HandleRequestCallBack<List<NeteastVideoSummary>> requestCallBack, final String videoId, int startPage){
+    public Subscription toLoadVideoListData(HandleRequestCallBack<List<NeteastVideoSummary>> requestCallBack, final String videoId, final int startPage){
         return httpService.getVideoList(videoId,startPage).compose(new BaseObservableTransfer<Map<String,List<NeteastVideoSummary>>>()).flatMap(new Func1<Map<String, List<NeteastVideoSummary>>, Observable<?>>() {
             @Override
             public Observable<?> call(Map<String, List<NeteastVideoSummary>> stringListMap) {

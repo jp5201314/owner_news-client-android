@@ -108,6 +108,7 @@ public class API {
     /**
      * 视频 http://c.3g.163.com/nc/video/list/V9LG4B3A0/n/10-10.html
      */
+    public static final String VIDEO_HOST = "http://c.3g.163.com/";
     public static final String Video = "nc/video/list/";
     public static final String VIDEO_CENTER = "/n/";
     public static final String VIDEO_END_URL = "-10.html";
@@ -171,15 +172,25 @@ public class API {
      * @return host
      */
     public static String getHost(int hostType) {
+        String host = null;
         switch (hostType) {
-            case HostType.NETEASE_NEWS_VIDEO:
-                return API.NETEAST_HOST;
+            case HostType.NETEASE_NEWS:
+                host =  API.NETEAST_HOST;
+                break;
             case HostType.SINA_NEWS_PHOTO:
-                return API.SINA_PHOTO_HOST;
+                host =  API.SINA_PHOTO_HOST;
+                break;
             case HostType.WEATHER_INFO:
-                return API.WEATHER_HOST;
+                host =  API.WEATHER_HOST;
+                break;
+            case HostType.SINA_IMAGE:
+                host =  API.SINA_IMAGE_HOST;
+                break;
+            case HostType.NETEASE_VEDIO:
+                host = API.VIDEO_HOST;
+                break;
         }
-        return API.SINA_IMAGE_HOST;
+        return host;
     }
 
 }

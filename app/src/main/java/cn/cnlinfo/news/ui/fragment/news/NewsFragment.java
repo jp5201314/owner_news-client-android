@@ -3,6 +3,9 @@ package cn.cnlinfo.news.ui.fragment.news;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.orhanobut.logger.Logger;
 
@@ -33,23 +36,31 @@ public class NewsFragment extends BaseFragment implements NewsContact.View {
     private NewsPresenter newsListPresenter;
     //private static final String CHANNELCHANGE = "channelChange";
 
- /*   @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }*/
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_news,container,false);
+        unbinder = ButterKnife.bind(this, view);
+        newsListPresenter = new NewsPresenter(this);
+        return view;
+    }
 
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
-        setContentView(R.layout.fragment_news);
-        unbinder = ButterKnife.bind(this, getContentView());
+       // setContentView(R.layout.fragment_news);
         Logger.d("onCreateViewLazy");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        newsListPresenter.opChannelToDb();
     }
 
     @Override
     protected void onFragmentStartLazy() {
         super.onFragmentStartLazy();
-        newsListPresenter = new NewsPresenter(this);
+
         Logger.d("onFragmentStartLazy");
     }
 
@@ -62,10 +73,16 @@ public class NewsFragment extends BaseFragment implements NewsContact.View {
     @Override
     protected void onDestroyViewLazy() {
         super.onDestroyViewLazy();
-        unbinder.unbind();
+
         Logger.d("onDestroyViewLazy");
         //注销关注频道变化的观察者
         //RxBus.get().unregister(CHANNELCHANGE, mChannelObservable);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override
@@ -81,7 +98,7 @@ public class NewsFragment extends BaseFragment implements NewsContact.View {
                 NewsChannel newsChannel = newsChannels.get(i);
                 tabTitle.add(newsChannel.getNewsChannelName());
                 Logger.d(newsChannel.getNewsChannelId()+":::"+newsChannel.getNewsChannelType());
-                newsListFragments.add(NewsListFragment.newInstace(newsChannel.getNewsChannelId(),newsChannel.getNewsChannelType(),newsChannel.getNewsChannelIndex()));
+                newsListFragments.add(NewsListFragment.newInstance(newsChannel.getNewsChannelId(),newsChannel.getNewsChannelType(),newsChannel.getNewsChannelIndex()));
             }
             if (viewPager.getAdapter() == null) {
                 // 初始化ViewPager

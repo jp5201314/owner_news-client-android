@@ -46,7 +46,7 @@ public class NeteastNewsSummaryDataSource implements IAsyncDataSource<List<Netea
     private RequestHandle loadUserLeaveMessageRecordList(final ResponseSender<List<NeteastNewsSummary>> sender, final int page){
         //Logger.d("loadUserLeaveMessageRecordList"+channelId+":"+channelType);
 
-        RetrofitManager.getInstance(HostType.NETEASE_NEWS_VIDEO).toLoadNeteastNewsSummaryListData(new HandleRequestCallBack<List<NeteastNewsSummary>>() {
+        RetrofitManager.getInstance(HostType.NETEASE_NEWS).toLoadNeteastNewsSummaryListData(new HandleRequestCallBack<List<NeteastNewsSummary>>() {
             @Override
             public void requestDataStart() {
 
@@ -54,9 +54,9 @@ public class NeteastNewsSummaryDataSource implements IAsyncDataSource<List<Netea
 
             @Override
             public void requestDataSuccess(List<NeteastNewsSummary> neteastNewsSummaries) {
-                Logger.d(neteastNewsSummaries.toString());
+//                Logger.d(neteastNewsSummaries.toString());
                 maxPage +=number;
-                Logger.d(maxPage);
+              //  Logger.d(maxPage);
                 sender.sendData(neteastNewsSummaries);
             }
 

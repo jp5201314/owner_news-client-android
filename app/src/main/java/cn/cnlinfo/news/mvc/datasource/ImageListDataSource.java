@@ -1,6 +1,5 @@
 package cn.cnlinfo.news.mvc.datasource;
 
-import com.orhanobut.logger.Logger;
 import com.shizhefei.mvc.IAsyncDataSource;
 import com.shizhefei.mvc.RequestHandle;
 import com.shizhefei.mvc.ResponseSender;
@@ -41,7 +40,7 @@ public class ImageListDataSource implements IAsyncDataSource<List<SinaPhotoDetai
 
             @Override
             public void requestDataSuccess(List<SinaPhotoDetail> sinaPhotoDetails) {
-                    Logger.d(sinaPhotoDetails.toString());
+//                    Logger.d(sinaPhotoDetails.toString());
                     sender.sendData(sinaPhotoDetails);
             }
 

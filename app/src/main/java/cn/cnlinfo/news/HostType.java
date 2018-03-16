@@ -18,17 +18,17 @@ public class HostType {
     /**
      * 多少种Host类型
      */
-    public static final int TYPE_COUNT = 4;
+    public static final int TYPE_COUNT = 5;
     /**
      * 网络图片的host
      */
     @HostTypeChecker
     public static final int SINA_IMAGE = 0;
     /**
-     * 网易新闻和视频的host
+     * 网易新闻的host
      */
     @HostTypeChecker
-    public static final int NETEASE_NEWS_VIDEO = 1;
+    public static final int NETEASE_NEWS = 1;
 
     /**
      * 新浪图片的host
@@ -42,11 +42,16 @@ public class HostType {
      */
     @HostTypeChecker
     public static final int WEATHER_INFO = 3;
+    /**
+     * 网易视频的host
+     */
+    @HostTypeChecker
+    public static final int NETEASE_VEDIO = 4;
 
     /**
      * 替代枚举的方案，使用IntDef保证类型安全
      */
-    @IntDef({SINA_IMAGE,NETEASE_NEWS_VIDEO, SINA_NEWS_PHOTO, WEATHER_INFO})
+    @IntDef({SINA_IMAGE, NETEASE_NEWS, SINA_NEWS_PHOTO, WEATHER_INFO,NETEASE_VEDIO})
     @Retention(RetentionPolicy.SOURCE)
     public @interface HostTypeChecker {
 

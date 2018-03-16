@@ -8,6 +8,7 @@ public class ErrorMessageEvent {
     private int errorCode;
     private String msg;
     public ErrorMessageEvent(){}
+
     public ErrorMessageEvent(int errorCode,String msg){
         this.errorCode =errorCode;
         this.msg = msg;

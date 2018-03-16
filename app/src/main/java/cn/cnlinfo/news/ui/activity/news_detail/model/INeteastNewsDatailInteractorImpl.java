@@ -15,6 +15,6 @@ public class INeteastNewsDatailInteractorImpl implements INeteastNewsDatailInter
     @Override
     public Subscription gainNewsDatailData(HandleRequestCallBack<NeteastNewsDetail> subscriber, String postId) {
 
-        return RetrofitManager.getInstance(HostType.NETEASE_NEWS_VIDEO).toGainNeteastNewsDatailData(subscriber,postId);
+        return RetrofitManager.getInstance(HostType.NETEASE_NEWS).toGainNeteastNewsDatailData(subscriber,postId);
     }
 }

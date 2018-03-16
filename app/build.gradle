@@ -57,32 +57,32 @@ android {
 
     productFlavors {
         huawei {
-            resValue "string", "img_app_name", "碳控因子"
+            resValue "string", "img_app_name", "疯狂新闻"
             manifestPlaceholders = [TD_CHANNEL_ID_VALUE: "huawei"]
         }
 
         xiaomi {
-            resValue("string", "img_app_name", "碳控因子")
+            resValue("string", "img_app_name", "疯狂新闻")
             manifestPlaceholders = [TD_CHANNEL_ID_VALUE: "xiaomi"]
         }
 
         qh360 {
-            resValue("string", "img_app_name", "碳控因子")
+            resValue("string", "img_app_name", "疯狂新闻")
             manifestPlaceholders = [TD_CHANNEL_ID_VALUE: "qh360"]
         }
 
         baidu {
-            resValue("string", "img_app_name", "碳控因子")
+            resValue("string", "img_app_name", "疯狂新闻")
             manifestPlaceholders = [TD_CHANNEL_ID_VALUE: "baidu"]
         }
 
         yingyongbao {
-            resValue("string", "img_app_name", "碳控因子")
+            resValue("string", "img_app_name", "疯狂新闻")
             manifestPlaceholders = [TD_CHANNEL_ID_VALUE: "yingyongbao"]
         }
 
         official {
-            resValue("string", "img_app_name", "碳控因子")
+            resValue("string", "img_app_name", "疯狂新闻")
             manifestPlaceholders = [TD_CHANNEL_ID_VALUE: "official"]
         }
     }
@@ -213,6 +213,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
     compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     /**
      * 万能适配器
      */

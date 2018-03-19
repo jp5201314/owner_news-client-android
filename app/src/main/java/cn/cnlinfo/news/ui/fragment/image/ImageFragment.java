@@ -17,8 +17,10 @@ import cn.cnlinfo.news.manager.PhoneManager;
 import cn.cnlinfo.news.mvc.datasource.ImageListDataSource;
 import cn.cnlinfo.news.mvc.helper.MVCUltraHelper;
 import cn.cnlinfo.news.rx.entity.NeteastNewsSummary;
+import cn.cnlinfo.news.rx.entity.SinaPhotoDetail;
 import cn.cnlinfo.news.ui.fragment.BaseFragment;
 import cn.cnlinfo.news.ui.fragment.image.adapter.ShowImageListAdapter;
+import cn.cnlinfo.news.ui.fragment.news.adapter.BaseRecyclerAdapter;
 import cn.cnlinfo.news.utils.BaseSpacesItemDecoration;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 
@@ -60,6 +62,12 @@ public class ImageFragment extends BaseFragment  {
         mvcHelper.setAdapter(adapter);
         // 加载数据
         mvcHelper.refresh();
+        adapter.setItemClickCallback(new BaseRecyclerAdapter.ItemClickCallback<SinaPhotoDetail>() {
+            @Override
+            public void onItemClicked(int position, SinaPhotoDetail entity) {
+
+            }
+        });
     }
 
     @Override

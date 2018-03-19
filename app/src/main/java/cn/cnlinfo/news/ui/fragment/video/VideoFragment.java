@@ -60,6 +60,7 @@ public class VideoFragment extends BaseFragment {
         mvcHelper.refresh();
     }
 
+
     @Override
     protected void onDestroyViewLazy() {
         super.onDestroyViewLazy();

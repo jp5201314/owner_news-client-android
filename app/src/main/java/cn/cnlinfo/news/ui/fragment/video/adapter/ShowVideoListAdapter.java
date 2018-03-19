@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.Glide;
 
 import java.util.Random;
 
@@ -19,7 +19,6 @@ import butterknife.ButterKnife;
 import cn.cnlinfo.news.R;
 import cn.cnlinfo.news.rx.entity.NeteastVideoSummary;
 import cn.cnlinfo.news.ui.fragment.news.adapter.BaseRecyclerAdapter;
-import cn.cnlinfo.news.utils.GlideUtils;
 
 /**
  * Created by JP on 2018/3/8 0008.
@@ -36,36 +35,36 @@ public class ShowVideoListAdapter extends BaseRecyclerAdapter<NeteastVideoSummar
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_image_fragment, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_video_fragment, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder) {
             if (list != null && getItemCount() > 0) {
                 NeteastVideoSummary neteastVideoSummary = list.get(position);
                 if (position%2==0) {
-                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(((ViewHolder) holder).img.getLayoutParams());
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(((ViewHolder) holder).ijkPlayer.getLayoutParams());
                     lp.setMargins(0,24,0,0);
                     lp.height =  new Random().nextInt(100)+240;
                     Log.d("TAG",lp.height+"");
-                    ((ViewHolder) holder).img.setLayoutParams(lp);
+                    ((ViewHolder) holder).ijkPlayer.setLayoutParams(lp);
                 } else {
-                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(((ViewHolder) holder).img.getLayoutParams());
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(((ViewHolder) holder).ijkPlayer.getLayoutParams());
                     lp.setMargins(0,0,0,0);
                     lp.height =  new Random().nextInt(100)+240;
                     Log.d("TAG",lp.height+"");
-                    ((ViewHolder) holder).img.setLayoutParams(lp);
+                    ((ViewHolder) holder).ijkPlayer.setLayoutParams(lp);
                 }
-                GlideUtils.loadDefault(neteastVideoSummary.getCover(),((ViewHolder) holder).img,false,null, DiskCacheStrategy.RESULT);
+                Glide.with(context).load(neteastVideoSummary.getCover()).asBitmap().into(((ViewHolder) holder).ijkPlayer);
                 ((ViewHolder) holder).title.setText(neteastVideoSummary.getTitle());
             }
         }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.img)
-        ImageView img;
+        @BindView(R.id.ijkPlayer)
+        ImageView ijkPlayer;
         @BindView(R.id.title)
         TextView title;
         public ViewHolder(View itemView) {

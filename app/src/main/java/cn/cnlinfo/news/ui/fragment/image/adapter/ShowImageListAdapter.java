@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +19,8 @@ import cn.cnlinfo.news.R;
 import cn.cnlinfo.news.rx.entity.SinaPhotoDetail;
 import cn.cnlinfo.news.ui.fragment.news.adapter.BaseRecyclerAdapter;
 import cn.cnlinfo.news.utils.GlideUtils;
+import uk.co.senab.photoview.PhotoView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Created by JP on 2018/3/8 0008.
@@ -58,18 +59,22 @@ public class ShowImageListAdapter extends BaseRecyclerAdapter<SinaPhotoDetail> {
                     ((ViewHolder) holder).img.setLayoutParams(lp);
                 }
                 GlideUtils.loadDefault(sinaPhotoDetail.getUrl(),((ViewHolder) holder).img,false,null, DiskCacheStrategy.RESULT);
+                ((ViewHolder) holder).mAttacher.update();
             }
         }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.img)
-        ImageView img;
+        PhotoView img;
         @BindView(R.id.title)
         TextView title;
+        PhotoViewAttacher mAttacher;
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            mAttacher = new PhotoViewAttacher(img);
         }
     }
 }

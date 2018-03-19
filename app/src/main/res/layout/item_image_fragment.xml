@@ -3,12 +3,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <ImageView
+    <uk.co.senab.photoview.PhotoView
         android:id="@+id/img"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop" />
+        android:layout_width="180dp"
+        android:layout_height="140dp"
+        android:background="#333333"
+        />
     <TextView
         android:id="@+id/title"
         android:textColor="#000"

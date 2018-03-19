@@ -294,8 +294,10 @@ public class MainPageActivity extends BaseActivity implements BottomNavigationBa
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)) {//按返回键如果抽屉开着的，按下就关闭
                     drawerLayout.closeDrawer(GravityCompat.START);
                 }
-                if (headImageDialog.isShowing()) {//按返回键如果选择头像的dialog显示着的，按下就关闭
-                    headImageDialog.dismiss();
+                if (headImageDialog!=null){
+                    if (headImageDialog.isShowing()) {//按返回键如果选择头像的dialog显示着的，按下就关闭
+                        headImageDialog.dismiss();
+                    }
                 }
             } else {
                 finish();

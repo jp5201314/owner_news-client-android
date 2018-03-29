@@ -1,5 +1,6 @@
 package cn.cnlinfo.news.ui.fragment.video;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -18,7 +19,9 @@ import cn.cnlinfo.news.manager.PhoneManager;
 import cn.cnlinfo.news.mvc.datasource.VideoListDataSource;
 import cn.cnlinfo.news.mvc.helper.MVCUltraHelper;
 import cn.cnlinfo.news.rx.entity.NeteastNewsSummary;
+import cn.cnlinfo.news.rx.entity.NeteastVideoSummary;
 import cn.cnlinfo.news.ui.fragment.BaseFragment;
+import cn.cnlinfo.news.ui.fragment.news.adapter.BaseRecyclerAdapter;
 import cn.cnlinfo.news.ui.fragment.video.adapter.ShowVideoListAdapter;
 import cn.cnlinfo.news.utils.BaseSpacesItemDecoration;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
@@ -58,6 +61,17 @@ public class VideoFragment extends BaseFragment {
         mvcHelper.setAdapter(adapter);
         // 加载数据
         mvcHelper.refresh();
+        adapter.setItemClickCallback(new BaseRecyclerAdapter.ItemClickCallback<NeteastVideoSummary>() {
+            @Override
+            public void onItemClicked(int position, NeteastVideoSummary entity) {
+                if (entity!=null){
+                    Intent intent = new Intent(getActivity(), PlayVideoActivity.class);
+                    intent.putExtra("videoUrl", entity.getMp4_url());
+                    intent.putExtra("videoName", entity.getTitle());
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
 

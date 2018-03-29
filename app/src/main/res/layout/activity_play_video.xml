@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_black_0e1214"
+    android:gravity="center"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/text_ffffff_18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        />
+    <cn.cnlinfo.news.view.VideoPlayerIJK
+        android:id="@+id/ijk_player"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </cn.cnlinfo.news.view.VideoPlayerIJK>
+
+</LinearLayout>

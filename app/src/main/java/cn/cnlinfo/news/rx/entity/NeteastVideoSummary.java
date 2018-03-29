@@ -1,11 +1,14 @@
 package cn.cnlinfo.news.rx.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by JP on 2018/3/5 0005.
  * 视屏实体类
  */
 
-public class NeteastVideoSummary {
+public class NeteastVideoSummary implements Parcelable{
 
 
     /**
@@ -63,6 +66,45 @@ public class NeteastVideoSummary {
     private String topicName;
     private String sectiontitle;
     private String topicDesc;
+
+    protected NeteastVideoSummary(Parcel in) {
+        sizeHD = in.readInt();
+        description = in.readString();
+        title = in.readString();
+        mp4_url = in.readString();
+        vid = in.readString();
+        cover = in.readString();
+        sizeSHD = in.readInt();
+        playersize = in.readInt();
+        ptime = in.readString();
+        m3u8_url = in.readString();
+        topicImg = in.readString();
+        votecount = in.readInt();
+        length = in.readInt();
+        videosource = in.readString();
+        sizeSD = in.readInt();
+        topicSid = in.readString();
+        playCount = in.readInt();
+        replyCount = in.readInt();
+        replyBoard = in.readString();
+        replyid = in.readString();
+        topicName = in.readString();
+        sectiontitle = in.readString();
+        topicDesc = in.readString();
+    }
+
+    public static final Creator<NeteastVideoSummary> CREATOR = new Creator<NeteastVideoSummary>() {
+        @Override
+        public NeteastVideoSummary createFromParcel(Parcel in) {
+            return new NeteastVideoSummary(in);
+        }
+
+        @Override
+        public NeteastVideoSummary[] newArray(int size) {
+            return new NeteastVideoSummary[size];
+        }
+    };
+
 
     public int getSizeHD() {
         return sizeHD;
@@ -270,6 +312,38 @@ public class NeteastVideoSummary {
 
     public void setTopicDesc(String topicDesc) {
         this.topicDesc = topicDesc;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(sizeHD);
+        dest.writeString(description);
+        dest.writeString(title);
+        dest.writeString(mp4_url);
+        dest.writeString(vid);
+        dest.writeString(cover);
+        dest.writeInt(sizeSHD);
+        dest.writeInt(playersize);
+        dest.writeString(ptime);
+        dest.writeString(m3u8_url);
+        dest.writeString(topicImg);
+        dest.writeInt(votecount);
+        dest.writeInt(length);
+        dest.writeString(videosource);
+        dest.writeInt(sizeSD);
+        dest.writeString(topicSid);
+        dest.writeInt(playCount);
+        dest.writeInt(replyCount);
+        dest.writeString(replyBoard);
+        dest.writeString(replyid);
+        dest.writeString(topicName);
+        dest.writeString(sectiontitle);
+        dest.writeString(topicDesc);
     }
 
     public static class VideoTopicBean {

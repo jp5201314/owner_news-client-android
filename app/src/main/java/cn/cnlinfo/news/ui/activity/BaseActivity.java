@@ -185,7 +185,7 @@ public class BaseActivity extends AppCompatActivity implements IComponentContain
 
 
     @Override
-    public void onStop() {
+    protected void onStop() {
         super.onStop();
         mComponentContainer.onBecomesTotallyInvisible();
     }

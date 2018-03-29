@@ -115,6 +115,12 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"/>
+        <!--播放视频界面-->
+        <activity android:name=".ui.fragment.video.PlayVideoActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="user"
+            android:theme="@style/NormalFullScreen"
+            />
     </application>
 
 </manifest>

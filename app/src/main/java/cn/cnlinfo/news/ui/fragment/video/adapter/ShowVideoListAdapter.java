@@ -58,6 +58,12 @@ public class ShowVideoListAdapter extends BaseRecyclerAdapter<NeteastVideoSummar
                 }
                 Glide.with(context).load(neteastVideoSummary.getCover()).asBitmap().into(((ViewHolder) holder).ijkPlayer);
                 ((ViewHolder) holder).title.setText(neteastVideoSummary.getTitle());
+                holder.itemView.setOnClickListener(new OnItemClick(position,neteastVideoSummary) {
+                    @Override
+                    protected void onItemClicked(int position, NeteastVideoSummary entity) {
+
+                    }
+                });
             }
         }
     }

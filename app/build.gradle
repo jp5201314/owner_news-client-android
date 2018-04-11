@@ -36,7 +36,7 @@ android {
         //不允许压缩png图片
         cruncherEnabled = false
     }
-    //引入libs目录下so文件
+    //引入libs目录下so文件,默认是加载main目录下jniLibs中的so文件
     sourceSets {
         main.jniLibs.srcDirs = ['libs']
     }
@@ -87,6 +87,7 @@ android {
             manifestPlaceholders = [TD_CHANNEL_ID_VALUE: "official"]
         }
     }
+    //输出运行在各个cpu架构平台的apk
     productFlavors {
         all32 { minSdkVersion 16 }
         all64 { minSdkVersion 21 }
@@ -98,7 +99,7 @@ android {
     }
     buildTypes {
         debug {
-            multiDexEnabled true
+            multiDexEnabled true//开启多个dex文件大于65535
             minifyEnabled false
             zipAlignEnabled false
             shrinkResources false
@@ -107,11 +108,15 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "true"
         }
         release {
-            minifyEnabled false
-            zipAlignEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 如果没有提供混淆规则文件，则设置默认的混淆规则文件（SDK/tools/proguard/proguard-android.txt）
+            pseudoLocalesEnabled true
+            minifyEnabled true//混淆代码
+            zipAlignEnabled true//Zipalign优化
+           /* // 移除无用的resource文件
+            shrinkResources true*/
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'//加载默认混淆配置文件
             signingConfig signingConfigs.release
-            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "LOG_DEBUG", "false"//不显示Log日志
         }
 
         //多个变体自定义输出配置，这是android studio3.0以下配置
@@ -208,7 +213,7 @@ dependencies {
     /**
      * recycleView列表控件
      */
-    compile 'com.android.support:recyclerview-v7:26.1.0'
+    //implementation 'com.android.support:recyclerview-v7:26.1.0'
     /**
      * 刷新库
      */

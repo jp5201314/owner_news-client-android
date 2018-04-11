@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_black_0e1214"
-    android:gravity="center"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_black_0e1214">
     <TextView
         android:id="@+id/tv_title"
         style="@style/text_ffffff_18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:text="TextView"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
         />
     <cn.cnlinfo.news.view.VideoPlayerIJK
         android:id="@+id/ijk_player"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_title">
 
     </cn.cnlinfo.news.view.VideoPlayerIJK>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
